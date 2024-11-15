@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.12.2 on win32)" generated="2024-10-31T10:53:27.319802" rpa="false" schemaversion="5">
+<suite id="s1" name="Login" source="C:\Users\condabu\Documents\Development\dashqa\testexecutor\tests\rbx\functional\Login.robot">
+<test id="s1-t1" name="Verify whether the Customer able to Login into Coop Bank application with valid Username and Password" line="6">
+<kw name="Launch Application">
+<msg time="2024-10-31T10:53:27.346960" level="FAIL">No keyword with name 'Launch Application' found.</msg>
+<arg>condabu</arg>
+<arg>password</arg>
+<status status="FAIL" start="2024-10-31T10:53:27.346960" elapsed="0.000000">No keyword with name 'Launch Application' found.</status>
+</kw>
+<status status="FAIL" start="2024-10-31T10:53:27.346960" elapsed="0.000000">No keyword with name 'Launch Application' found.</status>
+</test>
+<status status="FAIL" start="2024-10-31T10:53:27.324813" elapsed="0.022147"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Login">Login</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2024-10-31T10:53:27.330915" level="ERROR">Error in file 'C:\Users\condabu\Documents\Development\dashqa\testexecutor\tests\rbx\functional\Login.robot' on line 2: Importing library 'SeleniumLibrary' failed: ModuleNotFoundError: No module named 'SeleniumLibrary'
+Traceback (most recent call last):
+  None
+PYTHONPATH:
+  C:\Users\condabu\AppData\Roaming\JetBrains\PyCharm2024.2\plugins\robotframework-intellij\lib\robotframework_debug_adapter
+  C:\Users\condabu\Documents\Development\dashqa\testexecutor
+  C:\Users\condabu\AppData\Roaming\JetBrains\PyCharm2024.2\plugins\robotframework-intellij\lib
+  C:\Users\condabu\AppData\Roaming\JetBrains\PyCharm2024.2\plugins\robotframework-intellij\lib\robotframework_ls\vendored
+  C:\Python312\python312.zip
+  C:\Python312\DLLs
+  C:\Python312\Lib
+  C:\Python312
+  C:\Users\condabu\AppData\Roaming\Python\Python312\site-packages
+  C:\Python312\Lib\site-packages</msg>
+<msg time="2024-10-31T10:53:27.341948" level="ERROR">Error in file 'C:\Users\condabu\Documents\Development\dashqa\testexecutor\tests\rbx\functional\Login.robot' on line 3: Error in file 'C:\Users\condabu\Documents\Development\dashqa\testexecutor\resources\keywords.robot' on line 19: Resource file with 'Test Cases' section is invalid.</msg>
+</errors>
+</robot>

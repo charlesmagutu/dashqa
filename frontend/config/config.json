@@ -1,0 +1,9 @@
+{
+    "apiBaseUrl":"http://localhost:8081/api/v1/",
+    "appTitle":"Co-Opbank Qa Department",
+    "dev":"chalres Ondabu",
+    "endpoints":{
+        "testResults":"/results",
+        "testRun":"run"
+    }
+}

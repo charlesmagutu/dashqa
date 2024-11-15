@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.12.7 on win32)" generated="2024-11-12T12:28:03.651815" rpa="false" schemaversion="5">
+<suite id="s1" name="Login" source="C:\Users\condabu\Documents\Development\dashqa\testexecutor\suites\Omni\Login">
+<suite id="s1-s1" name="Login" source="C:\Users\condabu\Documents\Development\dashqa\testexecutor\suites\Omni\Login\Login.robot">
+<test id="s1-s1-t1" name="Verify whether the Customer able to Login into Coop Bank application with valid Username and Password" line="8">
+<kw name="Launch Application" owner="common_keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-12T12:28:03.779798" level="INFO">Opening browser 'edge' to base url 'http://172.16.19.194:50002/iportalweb/iRetail@1'.</msg>
+<arg>${URL}</arg>
+<arg>edge</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-12T12:28:03.779265" elapsed="1.921240"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-12T12:28:05.700505" elapsed="0.029653"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-12T12:28:35.732645" level="INFO">Slept 30 seconds.</msg>
+<arg>30s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-12T12:28:05.731163" elapsed="30.001482"/>
+</kw>
+<status status="PASS" start="2024-11-12T12:28:03.778728" elapsed="31.953917"/>
+</kw>
+<kw name="Enter Username" owner="login_keyword">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-12T12:28:35.738189" level="INFO">Typing text 'CIRUNGU' into text field 'id=mat-input-0'.</msg>
+<arg>id=mat-input-0</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-12T12:28:35.738189" elapsed="0.140484"/>
+</kw>
+<arg>CIRUNGU</arg>
+<status status="PASS" start="2024-11-12T12:28:35.736949" elapsed="0.141724"/>
+</kw>
+<kw name="Enter Password" owner="login_keyword">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-12T12:28:35.878673" level="INFO">Typing text '1234' into text field 'id=mat-input-1'.</msg>
+<arg>id=mat-input-1</arg>
+<arg>${password}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2024-11-12T12:28:35.878673" elapsed="0.127104"/>
+</kw>
+<arg>1234</arg>
+<status status="PASS" start="2024-11-12T12:28:35.878673" elapsed="0.127104"/>
+</kw>
+<kw name="Click Login Button" owner="login_keyword">
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2024-11-12T12:28:36.005777" level="INFO">Clicking button 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span'.</msg>
+<msg time="2024-11-12T12:28:36.368338" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-53.png"&gt;&lt;img src="selenium-screenshot-53.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2024-11-12T12:28:36.368338" level="FAIL">Button with locator 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span' not found.</msg>
+<arg>xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="FAIL" start="2024-11-12T12:28:36.005777" elapsed="0.367556">Button with locator 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span' not found.</status>
+</kw>
+<status status="FAIL" start="2024-11-12T12:28:36.005777" elapsed="0.367556">Button with locator 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span' not found.</status>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<arg>OTP Verification</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="NOT RUN" start="2024-11-12T12:28:36.374349" elapsed="0.000000"/>
+</kw>
+<doc>This test case verifies that a user can log in with valid credentials.</doc>
+<tag>Login</tag>
+<tag>Smoke</tag>
+<status status="FAIL" start="2024-11-12T12:28:03.746619" elapsed="32.627730">Button with locator 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span' not found.</status>
+</test>
+<status status="FAIL" start="2024-11-12T12:28:03.667481" elapsed="32.732937"/>
+</suite>
+<status status="FAIL" start="2024-11-12T12:28:03.651815" elapsed="32.748603"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">Login</stat>
+<stat pass="0" fail="1" skip="0">Smoke</stat>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Login">Login</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1" name="Login">Login.Login</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
