@@ -1,88 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.0.1 (Python 3.12.7 on win32)" generated="2024-11-12T12:28:03.651815" rpa="false" schemaversion="5">
-<suite id="s1" name="Login" source="C:\Users\condabu\Documents\Development\dashqa\testexecutor\suites\Omni\Login">
-<suite id="s1-s1" name="Login" source="C:\Users\condabu\Documents\Development\dashqa\testexecutor\suites\Omni\Login\Login.robot">
-<test id="s1-s1-t1" name="Verify whether the Customer able to Login into Coop Bank application with valid Username and Password" line="8">
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2024-11-23T01:17:21.785070" rpa="false" schemaversion="5">
+<suite id="s1" name="Suites" source="/home/condabu/development/dashqa/testrunner/suites">
+<suite id="s1-s1" name="Omni" source="/home/condabu/development/dashqa/testrunner/suites/Omni">
+<suite id="s1-s1-s1" name="Login" source="/home/condabu/development/dashqa/testrunner/suites/Omni/Login">
+<suite id="s1-s1-s1-s1" name="Login" source="/home/condabu/development/dashqa/testrunner/suites/Omni/Login/Login.robot">
+<test id="s1-s1-s1-s1-t1" name="Verify whether the Customer able to Login into Coop Bank application with valid Username and Password" line="8">
 <kw name="Launch Application" owner="common_keywords">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2024-11-12T12:28:03.779798" level="INFO">Opening browser 'edge' to base url 'http://172.16.19.194:50002/iportalweb/iRetail@1'.</msg>
+<msg time="2024-11-23T01:17:21.928629" level="INFO">Opening browser 'headlesschrome' to base url 'https://condabu.com'.</msg>
 <arg>${URL}</arg>
-<arg>edge</arg>
+<arg>headlesschrome</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2024-11-12T12:28:03.779265" elapsed="1.921240"/>
+<status status="PASS" start="2024-11-23T01:17:21.928151" elapsed="5.375463"/>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2024-11-12T12:28:05.700505" elapsed="0.029653"/>
+<status status="PASS" start="2024-11-23T01:17:27.304301" elapsed="0.045965"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2024-11-12T12:28:35.732645" level="INFO">Slept 30 seconds.</msg>
+<msg time="2024-11-23T01:17:57.351400" level="INFO">Slept 30 seconds.</msg>
 <arg>30s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2024-11-12T12:28:05.731163" elapsed="30.001482"/>
+<status status="PASS" start="2024-11-23T01:17:27.350618" elapsed="30.001198"/>
 </kw>
-<status status="PASS" start="2024-11-12T12:28:03.778728" elapsed="31.953917"/>
-</kw>
-<kw name="Enter Username" owner="login_keyword">
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-12T12:28:35.738189" level="INFO">Typing text 'CIRUNGU' into text field 'id=mat-input-0'.</msg>
-<arg>id=mat-input-0</arg>
-<arg>${username}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-12T12:28:35.738189" elapsed="0.140484"/>
-</kw>
-<arg>CIRUNGU</arg>
-<status status="PASS" start="2024-11-12T12:28:35.736949" elapsed="0.141724"/>
-</kw>
-<kw name="Enter Password" owner="login_keyword">
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-12T12:28:35.878673" level="INFO">Typing text '1234' into text field 'id=mat-input-1'.</msg>
-<arg>id=mat-input-1</arg>
-<arg>${password}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-12T12:28:35.878673" elapsed="0.127104"/>
-</kw>
-<arg>1234</arg>
-<status status="PASS" start="2024-11-12T12:28:35.878673" elapsed="0.127104"/>
-</kw>
-<kw name="Click Login Button" owner="login_keyword">
-<kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2024-11-12T12:28:36.005777" level="INFO">Clicking button 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span'.</msg>
-<msg time="2024-11-12T12:28:36.368338" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-53.png"&gt;&lt;img src="selenium-screenshot-53.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg time="2024-11-12T12:28:36.368338" level="FAIL">Button with locator 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span' not found.</msg>
-<arg>xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span</arg>
-<doc>Clicks the button identified by ``locator``.</doc>
-<status status="FAIL" start="2024-11-12T12:28:36.005777" elapsed="0.367556">Button with locator 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span' not found.</status>
-</kw>
-<status status="FAIL" start="2024-11-12T12:28:36.005777" elapsed="0.367556">Button with locator 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span' not found.</status>
+<status status="PASS" start="2024-11-23T01:17:21.926242" elapsed="35.426236"/>
 </kw>
 <kw name="Page Should Contain" owner="SeleniumLibrary">
-<arg>OTP Verification</arg>
+<msg time="2024-11-23T01:17:57.409065" level="INFO">Current page contains text 'condabu'.</msg>
+<arg>condabu</arg>
 <doc>Verifies that current page contains ``text``.</doc>
-<status status="NOT RUN" start="2024-11-12T12:28:36.374349" elapsed="0.000000"/>
+<status status="PASS" start="2024-11-23T01:17:57.353440" elapsed="0.055767"/>
 </kw>
 <doc>This test case verifies that a user can log in with valid credentials.</doc>
 <tag>Login</tag>
 <tag>Smoke</tag>
-<status status="FAIL" start="2024-11-12T12:28:03.746619" elapsed="32.627730">Button with locator 'xpath=/html/body/app-root/app-main-layout/div[3]/ng-component/div/div/div/div/form/fieldset[1]/div[2]/div[3]/button/span' not found.</status>
+<status status="PASS" start="2024-11-23T01:17:21.913057" elapsed="35.496741"/>
 </test>
-<status status="FAIL" start="2024-11-12T12:28:03.667481" elapsed="32.732937"/>
+<status status="PASS" start="2024-11-23T01:17:21.809734" elapsed="35.601486"/>
 </suite>
-<status status="FAIL" start="2024-11-12T12:28:03.651815" elapsed="32.748603"/>
+<status status="PASS" start="2024-11-23T01:17:21.808713" elapsed="35.604076"/>
+</suite>
+<suite id="s1-s1-s2" name="PesaLink" source="/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink">
+<suite id="s1-s1-s2-s1" name="PesalinkToMobile" source="/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink/PesalinkToMobile.robot">
+<test id="s1-s1-s2-s1-t1" name="Customer can use pesalini whether the Customer Coop Bank application with valid Username and Password" line="8">
+<kw name="Launch Application" owner="common_keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-23T01:17:57.436735" level="INFO">Opening browser 'headlesschrome' to base url 'https://condabu.com'.</msg>
+<arg>${URL}</arg>
+<arg>headlesschrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-23T01:17:57.435972" elapsed="37.345223"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-23T01:18:34.781656" elapsed="0.037060"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-23T01:19:04.819314" level="INFO">Slept 30 seconds.</msg>
+<arg>30s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-23T01:18:34.818940" elapsed="30.000557"/>
+</kw>
+<status status="PASS" start="2024-11-23T01:17:57.435014" elapsed="67.384669"/>
+</kw>
+<kw name="Enter Username" owner="login_keyword">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-23T01:19:04.821098" level="INFO">Typing text 'CIRUNGU' into text field 'id=mat-input-0'.</msg>
+<msg time="2024-11-23T01:19:04.979845" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-6.png"&gt;&lt;img src="selenium-screenshot-6.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2024-11-23T01:19:04.980048" level="FAIL">Element with locator 'id=mat-input-0' not found.</msg>
+<arg>id=mat-input-0</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="FAIL" start="2024-11-23T01:19:04.820619" elapsed="0.160078">Element with locator 'id=mat-input-0' not found.</status>
+</kw>
+<arg>CIRUNGU</arg>
+<status status="FAIL" start="2024-11-23T01:19:04.820123" elapsed="0.160760">Element with locator 'id=mat-input-0' not found.</status>
+</kw>
+<kw name="Enter Password" owner="login_keyword">
+<arg>1234</arg>
+<status status="NOT RUN" start="2024-11-23T01:19:04.981147" elapsed="0.000050"/>
+</kw>
+<kw name="Click Login Button" owner="login_keyword">
+<status status="NOT RUN" start="2024-11-23T01:19:04.981415" elapsed="0.000043"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<arg>OTP Verification</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="NOT RUN" start="2024-11-23T01:19:04.981623" elapsed="0.000038"/>
+</kw>
+<doc>This test case verifies that a user can log in with valid credentials.</doc>
+<tag>regression</tag>
+<status status="FAIL" start="2024-11-23T01:17:57.421788" elapsed="67.560092">Element with locator 'id=mat-input-0' not found.</status>
+</test>
+<status status="FAIL" start="2024-11-23T01:17:57.416196" elapsed="67.566454"/>
+</suite>
+<status status="FAIL" start="2024-11-23T01:17:57.413585" elapsed="67.570377"/>
+</suite>
+<status status="FAIL" start="2024-11-23T01:17:21.807622" elapsed="103.177187"/>
+</suite>
+<status status="FAIL" start="2024-11-23T01:17:21.786019" elapsed="103.199399"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="0" fail="1" skip="0">Login</stat>
-<stat pass="0" fail="1" skip="0">Smoke</stat>
+<stat pass="1" fail="0" skip="0">Login</stat>
+<stat pass="0" fail="1" skip="0">regression</stat>
+<stat pass="1" fail="0" skip="0">Smoke</stat>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Login">Login</stat>
-<stat pass="0" fail="1" skip="0" id="s1-s1" name="Login">Login.Login</stat>
+<stat pass="1" fail="1" skip="0" id="s1" name="Suites">Suites</stat>
+<stat pass="1" fail="1" skip="0" id="s1-s1" name="Omni">Suites.Omni</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1" name="Login">Suites.Omni.Login</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1-s1" name="Login">Suites.Omni.Login.Login</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s2" name="PesaLink">Suites.Omni.PesaLink</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s2-s1" name="PesalinkToMobile">Suites.Omni.PesaLink.PesalinkToMobile</stat>
 </suite>
 </statistics>
 <errors>
+<msg time="2024-11-23T01:17:57.410128" level="ERROR">Calling method 'end_test' of listener 'ReportListener' failed: AttributeError: 'ReportListener' object has no attribute 'test_start_time'</msg>
+<msg time="2024-11-23T01:19:04.981995" level="ERROR">Calling method 'end_test' of listener 'ReportListener' failed: AttributeError: 'ReportListener' object has no attribute 'test_start_time'</msg>
 </errors>
 </robot>

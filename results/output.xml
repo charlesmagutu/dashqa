@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2024-11-23T00:59:44.162061" rpa="false" schemaversion="5">
+<suite id="s1" name="Dashqa" source="/home/condabu/development/dashqa">
+<suite id="s1-s1" name="Testrunner" source="/home/condabu/development/dashqa/testrunner">
+<suite id="s1-s1-s1" name="Resources" source="/home/condabu/development/dashqa/testrunner/resources">
+<suite id="s1-s1-s1-s1" name="Common" source="/home/condabu/development/dashqa/testrunner/resources/common">
+<suite id="s1-s1-s1-s1-s1" name="Common Keywords" source="/home/condabu/development/dashqa/testrunner/resources/common/common_keywords.robot">
+<test id="s1-s1-s1-s1-s1-t1" name="Test Headless Chrome" line="8">
+<kw name="Launch Application">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-23T00:59:44.340359" level="INFO">Opening browser 'chrome' to base url 'https://condabu.com'.</msg>
+<msg time="2024-11-23T00:59:44.342812" level="INFO">Cannot capture screenshot because no browser is open.</msg>
+<msg time="2024-11-23T00:59:44.342979" level="FAIL">ValueError: Unable to parse option: "add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")"</msg>
+<arg>${URL}</arg>
+<arg>chrome</arg>
+<arg>options=add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="FAIL" start="2024-11-23T00:59:44.340022" elapsed="0.005228">ValueError: Unable to parse option: "add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")"</status>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="NOT RUN" start="2024-11-23T00:59:44.345699" elapsed="0.000205"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-23T00:59:44.346130" elapsed="0.000156"/>
+</kw>
+<status status="FAIL" start="2024-11-23T00:59:44.339227" elapsed="0.007274">ValueError: Unable to parse option: "add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")"</status>
+</kw>
+<status status="FAIL" start="2024-11-23T00:59:44.338609" elapsed="0.008241">ValueError: Unable to parse option: "add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")"</status>
+</test>
+<status status="FAIL" start="2024-11-23T00:59:44.231925" elapsed="0.115980"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:59:44.229378" elapsed="0.120213"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:59:44.226350" elapsed="0.124846"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:59:44.223999" elapsed="0.128413"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:59:44.204698" elapsed="0.148672"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Dashqa">Dashqa</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1" name="Testrunner">Dashqa.Testrunner</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s1" name="Resources">Dashqa.Testrunner.Resources</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s1-s1" name="Common">Dashqa.Testrunner.Resources.Common</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s1-s1-s1" name="Common Keywords">Dashqa.Testrunner.Resources.Common.Common Keywords</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -27,6 +27,7 @@ public class TestRun {
     private String duration;
     private String suite;
     private String triggeredBy;
+    private Long application;
     private LocalDateTime createdAt;
     private LocalDateTime endedAt;
 }

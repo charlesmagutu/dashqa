@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +23,7 @@ public class TestResultService {
     private TestRunRepository testRunRepository;
 
     @Autowired
-    private TestRunService testRunService;
+    private TestRunStatusService testRunService;
 
 
     public void saveResponsesFromExecutor(JsonNode jsonData){
@@ -42,6 +40,7 @@ public class TestResultService {
                }else if (type.equalsIgnoreCase("TEST_START")){
                 System.out.println("Test has been Started");
                 TestRun testRun = testRunStartDetails(jsonData);
+                System.out.print("received data is"+testRun.getRunId());
                 testRunRepository.save(testRun);
                }else if (type.equalsIgnoreCase("RUN_END")){
                     TestRun testRunEnd = testRunEndDetails(jsonData);
@@ -68,7 +67,8 @@ public class TestResultService {
         testResult.setStatus(getTextNode(jsonData, "status"));
         testResult.setMessage(getTextNode(jsonData, "message"));
         testResult.setCritical(getBooleanNode(jsonData, "critical"));
-        testResult.setRunId(getTextNode(jsonData, "run_id"));
+        testResult.setScreenshot(getTextNode(jsonData, "screenshot"));
+        testResult.setRunId(getTextNode(jsonData, "runId"));
         List<String> tags = new ArrayList<>();
         if (jsonData.has("tags")) {
             jsonData.get("tags").forEach(tag -> tags.add(tag.asText()));
@@ -92,7 +92,7 @@ public class TestResultService {
 
     public TestRun testRunStartDetails(JsonNode jsonData){
             TestRun testRun = new TestRun();
-            testRun.setRunId(getTextNode(jsonData, "run_id"));
+            testRun.setRunId(getTextNode(jsonData, "runId"));
             testRun.setRunDate(LocalDate.now());
             testRun.setStatus(getTextNode(jsonData, "status"));
             testRun.setCreatedAt(LocalDateTime.now());

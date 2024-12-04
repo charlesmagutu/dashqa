@@ -2,10 +2,10 @@
 Library        SeleniumLibrary
 
 *** Variables ***
-${URL}    http://172.16.19.194:50002/iportalweb/iRetail@1
+${URL}    https://condabu.com
 
 *** Keywords ***
 Launch Application
-    Open Browser    ${URL}    edge
+    Open Browser    ${URL}    headlesschrome
     Maximize Browser Window  # Optional: To maximize the browser window
     Sleep    30s

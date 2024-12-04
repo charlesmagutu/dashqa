@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2024-11-23T00:58:34.899807" rpa="false" schemaversion="5">
+<suite id="s1" name="Omni" source="/home/condabu/development/dashqa/testrunner/suites/Omni">
+<suite id="s1-s1" name="Login" source="/home/condabu/development/dashqa/testrunner/suites/Omni/Login">
+<suite id="s1-s1-s1" name="Login" source="/home/condabu/development/dashqa/testrunner/suites/Omni/Login/Login.robot">
+<test id="s1-s1-s1-t1" name="Verify whether the Customer able to Login into Coop Bank application with valid Username and Password" line="8">
+<kw name="Launch Application">
+<msg time="2024-11-23T00:58:35.038509" level="FAIL">No keyword with name 'Launch Application' found.</msg>
+<status status="FAIL" start="2024-11-23T00:58:35.038375" elapsed="0.000235">No keyword with name 'Launch Application' found.</status>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<arg>condabu</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="NOT RUN" start="2024-11-23T00:58:35.038978" elapsed="0.000058"/>
+</kw>
+<doc>This test case verifies that a user can log in with valid credentials.</doc>
+<tag>Login</tag>
+<tag>Smoke</tag>
+<status status="FAIL" start="2024-11-23T00:58:35.020779" elapsed="0.018613">No keyword with name 'Launch Application' found.</status>
+</test>
+<status status="FAIL" start="2024-11-23T00:58:34.921746" elapsed="0.123748"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:58:34.919986" elapsed="0.127240"/>
+</suite>
+<suite id="s1-s2" name="PesaLink" source="/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink">
+<suite id="s1-s2-s1" name="PesalinkToMobile" source="/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink/PesalinkToMobile.robot">
+<test id="s1-s2-s1-t1" name="Customer can use pesalini whether the Customer Coop Bank application with valid Username and Password" line="8">
+<kw name="Launch Application">
+<msg time="2024-11-23T00:58:35.077964" level="FAIL">No keyword with name 'Launch Application' found.</msg>
+<status status="FAIL" start="2024-11-23T00:58:35.077805" elapsed="0.000281">No keyword with name 'Launch Application' found.</status>
+</kw>
+<kw name="Enter Username" owner="login_keyword">
+<arg>CIRUNGU</arg>
+<status status="NOT RUN" start="2024-11-23T00:58:35.078741" elapsed="0.000137"/>
+</kw>
+<kw name="Enter Password" owner="login_keyword">
+<arg>1234</arg>
+<status status="NOT RUN" start="2024-11-23T00:58:35.079353" elapsed="0.000106"/>
+</kw>
+<kw name="Click Login Button" owner="login_keyword">
+<status status="NOT RUN" start="2024-11-23T00:58:35.079903" elapsed="0.000114"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<arg>OTP Verification</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="NOT RUN" start="2024-11-23T00:58:35.080543" elapsed="0.000132"/>
+</kw>
+<doc>This test case verifies that a user can log in with valid credentials.</doc>
+<tag>regression</tag>
+<status status="FAIL" start="2024-11-23T00:58:35.060679" elapsed="0.020579">No keyword with name 'Launch Application' found.</status>
+</test>
+<status status="FAIL" start="2024-11-23T00:58:35.052736" elapsed="0.034992"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:58:35.048468" elapsed="0.041068"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:58:34.900801" elapsed="0.190477"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">Login</stat>
+<stat pass="0" fail="1" skip="0">regression</stat>
+<stat pass="0" fail="1" skip="0">Smoke</stat>
+</tag>
+<suite>
+<stat pass="0" fail="2" skip="0" id="s1" name="Omni">Omni</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1" name="Login">Omni.Login</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s1" name="Login">Omni.Login.Login</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s2" name="PesaLink">Omni.PesaLink</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s2-s1" name="PesalinkToMobile">Omni.PesaLink.PesalinkToMobile</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2024-11-23T00:58:35.018260" level="ERROR">Error in file '/home/condabu/development/dashqa/testrunner/suites/Omni/Login/Login.robot' on line 5: Error in file '/home/condabu/development/dashqa/testrunner/resources/common/common_keywords.robot' on line 7: Resource file with 'Test Cases' section is invalid.</msg>
+<msg time="2024-11-23T00:58:35.058847" level="ERROR">Error in file '/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink/PesalinkToMobile.robot' on line 5: Error in file '/home/condabu/development/dashqa/testrunner/resources/common/common_keywords.robot' on line 7: Resource file with 'Test Cases' section is invalid.</msg>
+</errors>
+</robot>

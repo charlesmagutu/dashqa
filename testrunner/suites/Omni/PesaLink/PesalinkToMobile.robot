@@ -6,7 +6,7 @@ Resource    ../../../resources/common/common_keywords.robot
 Resource    ../../../resources/Login/login_keyword.robot
 *** Test Cases ***
 Customer can use pesalini whether the Customer Coop Bank application with valid Username and Password
-    [Tags]    Login    Smoke
+    [Tags]    regression
     [Documentation]    This test case verifies that a user can log in with valid credentials.
     Launch Application
     Enter Username    CIRUNGU

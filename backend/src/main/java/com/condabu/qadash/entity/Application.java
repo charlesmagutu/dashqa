@@ -3,8 +3,6 @@ package com.condabu.qadash.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.Array2DHashSet;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;

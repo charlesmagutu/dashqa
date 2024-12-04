@@ -12,6 +12,8 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/app")
+@CrossOrigin(origins = "http://localhost:5173") 
 public class ApplicationController {
     private final ApplicationService applicationService;
     private final DependencyAnalysisService dependencyService;

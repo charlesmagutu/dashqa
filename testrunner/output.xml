@@ -1,67 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.1.1 (Python 3.12.7 on win32)" generated="2024-11-04T12:10:09.861994" rpa="false" schemaversion="5">
-<suite id="s1" name="Login" source="c:\Users\condabu\Documents\Development\dashqa\testexecutor\tests\rbx\functional\Login.robot">
-<test id="s1-t1" name="Verify whether the Customer able to Login into Coop Bank application with valid Username and Password" line="7">
-<kw name="Launch Application" owner="keywords">
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2024-11-23T00:59:42.890404" rpa="false" schemaversion="5">
+<suite id="s1" name="Resources" source="/home/condabu/development/dashqa/testrunner/resources">
+<suite id="s1-s1" name="Common" source="/home/condabu/development/dashqa/testrunner/resources/common">
+<suite id="s1-s1-s1" name="Common Keywords" source="/home/condabu/development/dashqa/testrunner/resources/common/common_keywords.robot">
+<test id="s1-s1-s1-t1" name="Test Headless Chrome" line="8">
+<kw name="Launch Application">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2024-11-04T12:10:10.248652" level="INFO">Opening browser 'edge' to base url 'http://172.16.19.194:50002/iportalweb/iRetail@1'.</msg>
+<msg time="2024-11-23T00:59:43.122665" level="INFO">Opening browser 'chrome' to base url 'https://condabu.com'.</msg>
+<msg time="2024-11-23T00:59:43.140648" level="INFO">Cannot capture screenshot because no browser is open.</msg>
+<msg time="2024-11-23T00:59:43.144787" level="FAIL">ValueError: Unable to parse option: "add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")"</msg>
 <arg>${URL}</arg>
-<arg>edge</arg>
+<arg>chrome</arg>
+<arg>options=add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2024-11-04T12:10:10.248652" elapsed="1.826298"/>
+<status status="FAIL" start="2024-11-23T00:59:43.121851" elapsed="0.027182">ValueError: Unable to parse option: "add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")"</status>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2024-11-04T12:10:12.074950" elapsed="0.050029"/>
+<status status="NOT RUN" start="2024-11-23T00:59:43.152912" elapsed="0.000321"/>
 </kw>
-<status status="PASS" start="2024-11-04T12:10:10.248652" elapsed="1.876327"/>
-</kw>
-<kw name="Login To Application" owner="keywords">
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2024-11-04T12:10:42.128009" level="INFO">Slept 30 seconds.</msg>
-<arg>30s</arg>
+<arg>5s</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2024-11-04T12:10:12.126981" elapsed="30.001028"/>
+<status status="NOT RUN" start="2024-11-23T00:59:43.153697" elapsed="0.000299"/>
 </kw>
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-04T12:10:42.128995" level="INFO">Typing text 'CIRINGU' into text field 'id=mat-input-0'.</msg>
-<arg>id=mat-input-0</arg>
-<arg>${username}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-04T12:10:42.128009" elapsed="0.148852"/>
+<status status="FAIL" start="2024-11-23T00:59:43.119810" elapsed="0.035135">ValueError: Unable to parse option: "add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")"</status>
 </kw>
-<kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2024-11-04T12:10:42.276861" level="INFO">Typing text 'mypassword' into text field 'id=mat-input-1'.</msg>
-<arg>id=mat-input-1</arg>
-<arg>${password}</arg>
-<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2024-11-04T12:10:42.276861" elapsed="0.128006"/>
-</kw>
-<kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2024-11-04T12:10:42.404867" level="INFO">Clicking button 'xpath=//button[text()='Login']'.</msg>
-<msg time="2024-11-04T12:10:42.624869" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-10.png"&gt;&lt;img src="selenium-screenshot-10.png" width="800px"&gt;&lt;/a&gt;</msg>
-<msg time="2024-11-04T12:10:42.624869" level="FAIL">Button with locator 'xpath=//button[text()='Login']' not found.</msg>
-<arg>xpath=//button[text()='Login']</arg>
-<doc>Clicks the button identified by ``locator``.</doc>
-<status status="FAIL" start="2024-11-04T12:10:42.404867" elapsed="0.222039">Button with locator 'xpath=//button[text()='Login']' not found.</status>
-</kw>
-<kw name="Page Should Contain" owner="SeleniumLibrary">
-<arg>Welcome</arg>
-<doc>Verifies that current page contains ``text``.</doc>
-<status status="NOT RUN" start="2024-11-04T12:10:42.626906" elapsed="0.000000"/>
-</kw>
-<arg>CIRINGU</arg>
-<arg>mypassword</arg>
-<status status="FAIL" start="2024-11-04T12:10:12.125977" elapsed="30.500929">Button with locator 'xpath=//button[text()='Login']' not found.</status>
-</kw>
-<kw name="Close Browser" owner="SeleniumLibrary">
-<doc>Closes the current browser.</doc>
-<status status="NOT RUN" start="2024-11-04T12:10:42.627936" elapsed="0.000000"/>
-</kw>
-<doc>This test case verifies that a user can log in with valid credentials.</doc>
-<status status="FAIL" start="2024-11-04T12:10:10.247663" elapsed="32.381240">Button with locator 'xpath=//button[text()='Login']' not found.</status>
+<status status="FAIL" start="2024-11-23T00:59:43.118563" elapsed="0.037381">ValueError: Unable to parse option: "add_argument("--headless"),add_argument("--disable-gpu"),add_argument("--no-sandbox")"</status>
 </test>
-<status status="FAIL" start="2024-11-04T12:10:09.864994" elapsed="32.765875"/>
+<status status="FAIL" start="2024-11-23T00:59:42.922101" elapsed="0.238404"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:59:42.919909" elapsed="0.245881"/>
+</suite>
+<status status="FAIL" start="2024-11-23T00:59:42.894361" elapsed="0.273052"/>
 </suite>
 <statistics>
 <total>
@@ -70,7 +41,9 @@
 <tag>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Login">Login</stat>
+<stat pass="0" fail="1" skip="0" id="s1" name="Resources">Resources</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1" name="Common">Resources.Common</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s1" name="Common Keywords">Resources.Common.Common Keywords</stat>
 </suite>
 </statistics>
 <errors>

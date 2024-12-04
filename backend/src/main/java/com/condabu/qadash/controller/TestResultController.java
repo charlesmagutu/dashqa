@@ -3,7 +3,7 @@ package com.condabu.qadash.controller;
 import com.condabu.qadash.entity.TestResult;
 import com.condabu.qadash.entity.TestRun;
 import com.condabu.qadash.service.TestResultService;
-import com.condabu.qadash.service.TestRunService;
+import com.condabu.qadash.service.TestRunStatusService;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class TestResultController {
     private TestResultService testResultService;
 
     @Autowired
-    private TestRunService testRunService;
+    private TestRunStatusService testRunService;
     @PostMapping
     public ResponseEntity<String> receiveExecutionData(@RequestBody JsonNode jsonData){
         testResultService.saveResponsesFromExecutor(jsonData);

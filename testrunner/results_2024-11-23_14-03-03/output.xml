@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2024-11-23T14:03:03.342516" rpa="false" schemaversion="5">
+<suite id="s1" name="Suites" source="/home/condabu/development/dashqa/testrunner/suites">
+<suite id="s1-s1" name="Omni" source="/home/condabu/development/dashqa/testrunner/suites/Omni">
+<suite id="s1-s1-s1" name="Login" source="/home/condabu/development/dashqa/testrunner/suites/Omni/Login">
+<suite id="s1-s1-s1-s1" name="Login" source="/home/condabu/development/dashqa/testrunner/suites/Omni/Login/Login.robot">
+<test id="s1-s1-s1-s1-t1" name="Verify whether the Customer able to Login into Coop Bank application with valid Username and Password" line="8">
+<kw name="Launch Application" owner="common_keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-23T14:03:04.336259" level="INFO">Opening browser 'headlesschrome' to base url 'https://condabu.com'.</msg>
+<arg>${URL}</arg>
+<arg>headlesschrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-23T14:03:04.335055" elapsed="18.400544"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-23T14:03:22.737055" elapsed="0.217615"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-23T14:03:52.957918" level="INFO">Slept 30 seconds.</msg>
+<arg>30s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-23T14:03:22.956184" elapsed="30.002233"/>
+</kw>
+<status status="PASS" start="2024-11-23T14:03:04.331145" elapsed="48.627834"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<msg time="2024-11-23T14:03:53.037291" level="INFO">Current page contains text 'condabu'.</msg>
+<arg>condabu</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="PASS" start="2024-11-23T14:03:52.960070" elapsed="0.077628"/>
+</kw>
+<doc>This test case verifies that a user can log in with valid credentials.</doc>
+<tag>Login</tag>
+<tag>Smoke</tag>
+<status status="PASS" start="2024-11-23T14:03:04.127760" elapsed="48.911357"/>
+</test>
+<status status="PASS" start="2024-11-23T14:03:03.480980" elapsed="49.657112"/>
+</suite>
+<status status="PASS" start="2024-11-23T14:03:03.471623" elapsed="49.674513"/>
+</suite>
+<suite id="s1-s1-s2" name="PesaLink" source="/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink">
+<suite id="s1-s1-s2-s1" name="PesalinkToMobile" source="/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink/PesalinkToMobile.robot">
+<test id="s1-s1-s2-s1-t1" name="Customer can use pesalini whether the Customer Coop Bank application with valid Username and Password" line="8">
+<kw name="Launch Application" owner="common_keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-23T14:03:53.245925" level="INFO">Opening browser 'headlesschrome' to base url 'https://condabu.com'.</msg>
+<arg>${URL}</arg>
+<arg>headlesschrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2024-11-23T14:03:53.244210" elapsed="139.132138"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2024-11-23T14:06:12.378201" elapsed="0.179762"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2024-11-23T14:06:42.561107" level="INFO">Slept 30 seconds.</msg>
+<arg>30s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2024-11-23T14:06:12.559431" elapsed="30.002094"/>
+</kw>
+<status status="PASS" start="2024-11-23T14:03:53.241444" elapsed="169.320537"/>
+</kw>
+<kw name="Enter Username" owner="login_keyword">
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2024-11-23T14:06:42.565691" level="INFO">Typing text 'CIRUNGU' into text field 'id=mat-input-0'.</msg>
+<msg time="2024-11-23T14:06:43.196921" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2024-11-23T14:06:43.199051" level="FAIL">Element with locator 'id=mat-input-0' not found.</msg>
+<arg>id=mat-input-0</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="FAIL" start="2024-11-23T14:06:42.564272" elapsed="0.652459">Element with locator 'id=mat-input-0' not found.</status>
+</kw>
+<arg>CIRUNGU</arg>
+<status status="FAIL" start="2024-11-23T14:06:42.562943" elapsed="0.654715">Element with locator 'id=mat-input-0' not found.</status>
+</kw>
+<kw name="Enter Password" owner="login_keyword">
+<arg>1234</arg>
+<status status="NOT RUN" start="2024-11-23T14:06:43.219083" elapsed="0.000360"/>
+</kw>
+<kw name="Click Login Button" owner="login_keyword">
+<status status="NOT RUN" start="2024-11-23T14:06:43.220897" elapsed="0.000396"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<arg>OTP Verification</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="NOT RUN" start="2024-11-23T14:06:43.222590" elapsed="0.000333"/>
+</kw>
+<doc>This test case verifies that a user can log in with valid credentials.</doc>
+<tag>regression</tag>
+<status status="FAIL" start="2024-11-23T14:03:53.189867" elapsed="170.035131">Element with locator 'id=mat-input-0' not found.</status>
+</test>
+<status status="FAIL" start="2024-11-23T14:03:53.162367" elapsed="170.119626"/>
+</suite>
+<status status="FAIL" start="2024-11-23T14:03:53.151628" elapsed="170.140226"/>
+</suite>
+<status status="FAIL" start="2024-11-23T14:03:03.464606" elapsed="219.844680"/>
+</suite>
+<status status="FAIL" start="2024-11-23T14:03:03.346978" elapsed="219.970167"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">Login</stat>
+<stat pass="0" fail="1" skip="0">regression</stat>
+<stat pass="1" fail="0" skip="0">Smoke</stat>
+</tag>
+<suite>
+<stat pass="1" fail="1" skip="0" id="s1" name="Suites">Suites</stat>
+<stat pass="1" fail="1" skip="0" id="s1-s1" name="Omni">Suites.Omni</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1" name="Login">Suites.Omni.Login</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1-s1" name="Login">Suites.Omni.Login.Login</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s2" name="PesaLink">Suites.Omni.PesaLink</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s2-s1" name="PesalinkToMobile">Suites.Omni.PesaLink.PesalinkToMobile</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

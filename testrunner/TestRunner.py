@@ -1,27 +1,26 @@
-from datetime import datetime
-import platform
-from threading import Lock
-import psutil
-import requests
+import argparse
+from asyncio.log import logger
 import os
+import platform
+from datetime import datetime
+from threading import Lock
+from xmlrpc.client import boolean
+import requests
 from robot.running import TestSuiteBuilder
 from robot.api import ExecutionResult, ResultWriter
+
 
 class ReportListener:
     ROBOT_LISTENER_API_VERSION = 2
 
-    def __init__(self, api_url=None):
-        super().__init__()
-        self.run_id = datetime.now().strftime("%Y%m%d-%H%M%S")
+    def __init__(self, api_url=None, runId=None):
+        self.runId = runId or datetime.now().strftime("%Y%m%d-%H%M%S")
         self.failed_requests = []
         self.api_url = api_url or os.getenv("API_URL", "http://localhost:8081/api/v1/test")
         self.current_suite = None
         self.current_test = None
-        self.suite_start_time = None
-        self.test_start_time = None
         self.lock = Lock()
         self.session = requests.Session()
-        self.failed_requests = []
 
         # Initialize system info
         self.system_info = {
@@ -30,137 +29,53 @@ class ReportListener:
             "processor": platform.processor(),
             "machine": platform.machine()
         }
-    
-    def start_run(self, name, attrs):
-        run_id = self.run_id
 
-
-    def start_suite(self, name, attrs):
-        self.current_suite = name
-        self.start_time =  datetime.now()
-        suite_data = {
-                "suiteName": name,
-                "startedAt": "today",
-                "messageFrom": "programmed by ondabu"
-        }
-
-        #self._send_data(suite_data)
+    def start_suite(self, name, attributes):
+        print(f"obonjusto {attributes}")
+        # print(f"Suite name: {name}")
+        # print(f"Documentation: {attributes['doc']}")
+        # print(f"Metadata: {attributes['metadata']}")
+        # print(f"Source: {attributes['source']}")
+        # print(f"Parent: {attributes.get('parent', 'None')}")
+        # print(f"Child suites: {attributes['suites']}")
+        # print(f"Tests: {attributes['tests']}")
+        # print(f"Total tests: {attributes['totaltests']}")
+        # print(f"ID: {attributes['id']}")
+        # print(f"Fully qualified name: {attributes['longname']}")
 
     def start_test(self, name, attrs):
         self.current_test = name
         self.test_start_time = datetime.now()
-
-        # Initialize performance metrics for the test
-        self.performance_metrics = {
-            "start_cpu": psutil.cpu_percent(),
-            "start_memory": self.get_memory_usage(),
-            "steps": [],
-            "keywords": []
-        }
-
         test_data = {
             "type": "TEST_START",
-            "run_id": self.run_id,  # Use the simple Run ID
+            "runId": self.runId,
             "suite": self.current_suite,
             "name": name,
-            "startTime": self.test_start_time.isoformat(),
-            "tags": attrs["tags"],
+            "tags": attrs.get("tags", []),
             "status": "RUNNING",
             "systemInfo": self.system_info,
-            "initialMetrics": self.performance_metrics
         }
-
+        print(test_data)
         self._send_data(test_data)
 
     def end_test(self, name, attrs):
         end_time = datetime.now()
         duration = (end_time - self.test_start_time).total_seconds()
 
-        # Collect final performance metrics
-        final_metrics = self.collect_final_metrics(name)
-
         test_data = {
             "type": "TEST_END",
-            "run_id": self.run_id,  # Use the simple Run ID
+            "runId": self.runId,
             "suite": self.current_suite,
             "name": name,
             "startTime": self.test_start_time.isoformat(),
             "endTime": end_time.isoformat(),
             "duration": duration,
             "status": attrs["status"],
-            "tags": attrs["tags"],
+            "tags": attrs.get("tags", []),
             "message": attrs.get("message", ""),
             "critical": attrs.get("critical", False),
-            "metrics": {**self.performance_metrics, **final_metrics}
         }
-
         self._send_data(test_data)
-
-    def collect_final_metrics(self, name):
-        end_cpu = psutil.cpu_percent()
-        end_memory = self.get_memory_usage()
-        peak_memory = max(step["memory"] for step in self.performance_metrics["steps"]) if self.performance_metrics["steps"] else end_memory
-
-        # Calculate average CPU usage
-        avg_cpu = self.calculate_average_cpu()
-
-        return {
-            "end_cpu": end_cpu,
-            "end_memory": end_memory,
-            "peak_memory": peak_memory,
-            "avg_cpu": avg_cpu,
-            "step_count": len(self.performance_metrics["steps"]),
-            "keyword_count": len(self.performance_metrics["keywords"])
-        }
-
-    def calculate_average_cpu(self):
-        if not self.performance_metrics["steps"]:
-            return 0
-        return sum(step["cpu"] for step in self.performance_metrics["steps"]) / len(self.performance_metrics["steps"])
-
-    def get_memory_usage(self):
-        return psutil.Process().memory_info().rss / 1024 / 1024  # Convert to MB
-
-    def start_keyword(self, name, attrs):
-        if self.current_test:
-            self.performance_metrics["keywords"].append({
-                "name": name,
-                "type": attrs.get("type", ""),
-                "startTime": datetime.now().isoformat()
-            })
-
-    def end_keyword(self, name, attrs):
-        if self.current_test:
-            current_metrics = {
-                "cpu": psutil.cpu_percent(),
-                "memory": self.get_memory_usage(),
-                "timestamp": datetime.now().isoformat()
-            }
-            self.performance_metrics["steps"].append(current_metrics)
-
-    def end_suite(self, name, attrs):
-        coverage_data = {
-            'suiteName': name,
-            'lineCoverage': self._get_coverage_data('line'),
-            'branchCoverage': self._get_coverage_data('branch'),
-            'functionCoverage': self._get_coverage_data('function'),
-            'mutationScore': self._get_mutation_score()
-        }
-        self._send_data(coverage_data)
-
-    def log_message(self, message):
-        if message["level"] in ["ERROR", "FAIL", "WARN"]:
-            log_data = {
-                "type": "LOG",
-                "run_id": self.run_id,  # Use the simple Run ID
-                "suite": self.current_suite,
-                "test": self.current_test,
-                "level": message["level"],
-                "timestamp": datetime.now().isoformat(),
-                "message": message["message"],
-                "html": message["html"]
-            }
-            self._send_data(log_data)
 
     def _send_data(self, data):
         try:
@@ -174,80 +89,120 @@ class ReportListener:
                 response.raise_for_status()
         except requests.exceptions.RequestException as e:
             self.failed_requests.append(data)
-            print(f"Failed to send data to dashboard: {str(e)}")
+            print(f"Failed to send data: {str(e)}")
 
     def close(self):
-        run_end = self.run_id
-        end_time =  datetime.now() 
+        retry_count = 3
         if self.failed_requests:
-            print(f"Retrying to send {len(self.failed_requests)} failed requests...")
-            for data in self.failed_requests:
-                self._send_data(data)
-
-        run_end_data = {
-            "type" :"RUN_END",
-            "runId" : run_end,
-            "status" :"ENDED",
-            "runEndTime" : end_time.strftime("%Y-%m-%d %H:%M:%S")
-        }
-        self._send_data(run_end_data);
-
-    def _get_coverage_data(self, coverage_type):
-        return 0  # Placeholder for coverage data
-
-    def _get_mutation_score(self):
-        return 0  # Placeholder for mutation score
+            print(f"Retrying {len(self.failed_requests)} failed requests...")
+            for data in self.failed_requests[:]:  # Create a copy to iterate over
+                for attempt in range(retry_count):
+                    try:
+                        self._send_data(data)
+                        self.failed_requests.remove(data)
+                        break
+                    except requests.exceptions.RequestException as e:
+                        if attempt == retry_count - 1:
+                            print(f"Failed to retry request after {retry_count} attempts: {str(e)}")
 
 
-def execute_robot_tests(test_path):
+def execute_robot_tests(test_path, output_dir, options=None):
+    if not test_path:
+        raise ValueError("No test path provided. Please specify test cases to execute.")
+
     try:
-        os.makedirs('results', exist_ok=True)
-        
-        listener = ReportListener()
-        
+        os.makedirs(output_dir, exist_ok=True)
+
+        listener = ReportListener(runId=options.get('runId') if options else None)
         builder = TestSuiteBuilder()
         suite = builder.build(test_path)
-        
-        output_path = os.path.join('results', 'output.xml')
-        log_path = os.path.join('results', 'log.html')
-        report_path = os.path.join('results', 'report.html')
-        
+
+        output_file = os.path.join(output_dir, 'output.xml')
+        log_file = os.path.join(output_dir, 'log.html')
+        report_file = os.path.join(output_dir, 'report.html')
+
+        # Remove None values from options
+        cleaned_options = {k: v for k, v in (options or {}).items() if v is not None}
+
         result = suite.run(
             listener=listener,
-            output=output_path,
-            log=log_path,
-            report=report_path
+            output=output_file,
+            log=log_file,
+            report=report_file,
+            **cleaned_options
         )
-        
-        if os.path.exists(output_path):
-            execution_result = ExecutionResult(output_path)
-            execution_result.configure()
-            ResultWriter(execution_result).write_results(
-                report=report_path,
-                log=log_path
-            )
+
+        execution_result = ExecutionResult(output_file)
+        execution_result.configure()
+        ResultWriter(execution_result).write_results(report=report_file, log=log_file)
 
         return {
             'status': 'PASS' if result == 0 else 'FAIL',
-            'output_path': output_path,
-            'log_path': log_path,
-            'report_path': report_path
+            'output_file': output_file,
+            'log_file': log_file,
+            'report_file': report_file
         }
-        
+
     except Exception as e:
-        print(f"Error in test execution: {str(e)}")
+        print(f"Error during test execution: {str(e)}")
         raise
 
 
 if __name__ == '__main__':
-    test_directory = './suites/Omni/Login'
-    
+    parser = argparse.ArgumentParser(description="Execute Robot Framework tests with enhanced reporting.")
+    parser.add_argument("--test_path", type=str, help="Path to the Robot Framework test suite or directory.")
+    parser.add_argument("--output_dir", type=str, 
+                       default=f"results_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}", 
+                       help="Directory to store output files.")
+    parser.add_argument("--variable", "-v", action="append", help="Set variables in Robot Framework (e.g., `key:value`).")
+    parser.add_argument("--include", "-i", nargs="*", help="Run only tests with the specified tags.")
+    parser.add_argument("--exclude", "-e", nargs="*", help="Skip tests with the specified tags.")
+    parser.add_argument("--listener", help="Custom listener class.")
+    parser.add_argument("--runId", type=str, help="Unique dynamic ID for the run.")
+    parser.add_argument("--environment", type=str, help="The environment where the application is running (e.g., SIT, UAT, Preprod).")
+    parser.add_argument("--browser", type=str, help="Browser (e.g., chrome, edge, firefox).")
+    parser.add_argument("--headless", action="store_true", help="Run tests in headless browser mode.")
+    parser.add_argument("--report", action="store_true", help="Generate a detailed test report.")
+    parser.add_argument("--scriptsFolder", type=str, help="Path to the folder containing test scripts.")
+    parser.add_argument("--dry-run", nargs="*", help="Path to the folder containing test scripts.")
+
+
+    args = parser.parse_args()
+
+    # Determine the test path
+    test_path = args.scriptsFolder if args.scriptsFolder else args.test_path
+
+    if not test_path:
+        print("Error: No test path provided. Please specify --test_path or --scriptsFolder.")
+        exit(1)
+
+    robot_options = {
+        'runId': args.runId
+    }
+
+    if args.variable:
+        try:
+            robot_options["variable"] = [tuple(var.split(":", 1)) for var in args.variable]
+        except ValueError:
+            print("Invalid variable format. Use key:value pairs.")
+            exit(1)
+    if args.include:
+        robot_options["include"] = args.include
+    if args.exclude:
+        robot_options["exclude"] = args.exclude
+    if args.listener:
+        robot_options["listener"] = args.listener
+
     try:
-        results = execute_robot_tests(test_directory)
-        
-        print("\nTest Execution Summary:")
-        print(f"Overall Status: {results['status']}")
-        print(f"Output files generated in: {os.path.abspath('results')}")
-                    
+        results = execute_robot_tests(test_path, args.output_dir, robot_options)
+
+        if results:
+            print("\nTest Execution Summary:")
+            print(f"Status: {results['status']}")
+            print(f"Output: {results['output_file']}")
+            print(f"Log: {results['log_file']}")
+            print(f"Report: {results['report_file']}")
+
     except Exception as e:
         print(f"Error executing tests: {str(e)}")
+        exit(1)

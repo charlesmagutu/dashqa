@@ -24,6 +24,7 @@ public class TestResult {
     private String message;
     private boolean critical;
     private String  runId;
+    private String screenshot;
     @ElementCollection
     @CollectionTable(name = "test_tags", joinColumns = @JoinColumn(name="test_id"))
     @Column(name = "tag")

@@ -4,23 +4,18 @@ import com.condabu.qadash.dto.ApiStatus;
 import com.condabu.qadash.entity.Application;
 import com.condabu.qadash.entity.InternalApi;
 import com.condabu.qadash.repository.ApplicationRepository;
-import com.condabu.qadash.repository.FeatureRepository;
 import com.condabu.qadash.repository.InternalApiRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ApplicationService {
     private final ApplicationRepository applicationRepository;
-    private final FeatureRepository featureRepository;
     private final InternalApiRepository internalApiRepository;
 
     @Transactional(readOnly = true)

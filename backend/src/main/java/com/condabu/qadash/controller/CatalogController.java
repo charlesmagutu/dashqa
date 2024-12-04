@@ -1,7 +1,6 @@
 package com.condabu.qadash.controller;
 
 import com.condabu.qadash.entity.Application;
-import com.condabu.qadash.service.ApplicationService;
 import com.condabu.qadash.service.DependencyAnalysisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,6 @@ import java.util.Set;
 @RestController
 @RequestMapping("api/v1")
 public class CatalogController {
-    @Autowired
-    private ApplicationService applicationService;
     @Autowired
     DependencyAnalysisService dependencyAnalysisService;
     @GetMapping("/applications")

@@ -5,7 +5,6 @@ import com.condabu.qadash.entity.ApiStatusHistory;
 import com.condabu.qadash.entity.InternalApi;
 import com.condabu.qadash.repository.ApiStatusHistoryRepository;
 import com.condabu.qadash.repository.InternalApiRepository;
-import com.condabu.qadash.repository.ThirdPartyApiRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApiMonitoringService {
     private final InternalApiRepository internalApiRepository;
-    private final ThirdPartyApiRepository thirdPartyApiRepository;
     private final ApiStatusHistoryRepository statusHistoryRepository;
     //private final NotificationService notificationService;
 

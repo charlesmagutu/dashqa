@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2024-11-26T13:14:45.347870" rpa="false" schemaversion="5">
+<suite id="s1" name="Suites" source="/home/condabu/development/dashqa/testrunner/suites">
+<suite id="s1-s1" name="Omni" source="/home/condabu/development/dashqa/testrunner/suites/Omni">
+<suite id="s1-s1-s1" name="Login" source="/home/condabu/development/dashqa/testrunner/suites/Omni/Login">
+<suite id="s1-s1-s1-s1" name="Login" source="/home/condabu/development/dashqa/testrunner/suites/Omni/Login/Login.robot">
+<test id="s1-s1-s1-s1-t1" name="Verify whether the Customer able to Login into Coop Bank application with valid Username and Password" line="8">
+<kw name="Launch Application" owner="common_keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2024-11-26T13:14:45.500321" level="INFO">Opening browser 'headlesschrome' to base url 'https://condabu.com'.</msg>
+<msg time="2024-11-26T13:14:47.889456" level="INFO">Cannot capture screenshot because no browser is open.</msg>
+<msg time="2024-11-26T13:14:47.890063" level="FAIL">NoSuchDriverException: Message: Unable to obtain driver for chrome using Selenium Manager.; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+</msg>
+<arg>${URL}</arg>
+<arg>headlesschrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="FAIL" start="2024-11-26T13:14:45.499916" elapsed="2.398199">NoSuchDriverException: Message: Unable to obtain driver for chrome using Selenium Manager.; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+</status>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="NOT RUN" start="2024-11-26T13:14:47.899096" elapsed="0.000211"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>30s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-26T13:14:47.899922" elapsed="0.000174"/>
+</kw>
+<status status="FAIL" start="2024-11-26T13:14:45.497941" elapsed="2.402853">NoSuchDriverException: Message: Unable to obtain driver for chrome using Selenium Manager.; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+</status>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<arg>condabu</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="NOT RUN" start="2024-11-26T13:14:47.902381" elapsed="0.000390"/>
+</kw>
+<doc>This test case verifies that a user can log in with valid credentials.</doc>
+<tag>Login</tag>
+<tag>Smoke</tag>
+<status status="FAIL" start="2024-11-26T13:14:45.486301" elapsed="2.418009">NoSuchDriverException: Message: Unable to obtain driver for chrome using Selenium Manager.; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors/driver_location
+</status>
+</test>
+<status status="FAIL" start="2024-11-26T13:14:45.370960" elapsed="2.553247"/>
+</suite>
+<status status="FAIL" start="2024-11-26T13:14:45.369998" elapsed="2.556196"/>
+</suite>
+<suite id="s1-s1-s2" name="PesaLink" source="/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink">
+<suite id="s1-s1-s2-s1" name="PesalinkToMobile" source="/home/condabu/development/dashqa/testrunner/suites/Omni/PesaLink/PesalinkToMobile.robot">
+<test id="s1-s1-s2-s1-t1" name="Customer can use pesalini whether the Customer Coop Bank application with valid Username and Password" line="8">
+<kw name="Launch Application" owner="common_keywords">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<arg>${URL}</arg>
+<arg>headlesschrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="FAIL" start="2024-11-26T13:14:47.948625" elapsed="0.000314">Execution terminated by signal</status>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="NOT RUN" start="2024-11-26T13:14:47.949200" elapsed="0.000072"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<arg>30s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" start="2024-11-26T13:14:47.949484" elapsed="0.000096"/>
+</kw>
+<status status="FAIL" start="2024-11-26T13:14:47.948075" elapsed="0.001771">Execution terminated by signal</status>
+</kw>
+<kw name="Enter Username" owner="login_keyword">
+<arg>CIRUNGU</arg>
+<status status="NOT RUN" start="2024-11-26T13:14:47.950344" elapsed="0.000102"/>
+</kw>
+<kw name="Enter Password" owner="login_keyword">
+<arg>1234</arg>
+<status status="NOT RUN" start="2024-11-26T13:14:47.950876" elapsed="0.000096"/>
+</kw>
+<kw name="Click Login Button" owner="login_keyword">
+<status status="NOT RUN" start="2024-11-26T13:14:47.951399" elapsed="0.000092"/>
+</kw>
+<kw name="Page Should Contain" owner="SeleniumLibrary">
+<arg>OTP Verification</arg>
+<doc>Verifies that current page contains ``text``.</doc>
+<status status="NOT RUN" start="2024-11-26T13:14:47.951885" elapsed="0.000107"/>
+</kw>
+<doc>This test case verifies that a user can log in with valid credentials.</doc>
+<tag>regression</tag>
+<status status="FAIL" start="2024-11-26T13:14:47.936804" elapsed="0.015810">Execution terminated by signal</status>
+</test>
+<status status="FAIL" start="2024-11-26T13:14:47.930020" elapsed="0.033769"/>
+</suite>
+<status status="FAIL" start="2024-11-26T13:14:47.927681" elapsed="0.037354"/>
+</suite>
+<status status="FAIL" start="2024-11-26T13:14:45.368980" elapsed="2.597109"/>
+</suite>
+<status status="FAIL" start="2024-11-26T13:14:45.348773" elapsed="2.618559"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">Login</stat>
+<stat pass="0" fail="1" skip="0">regression</stat>
+<stat pass="0" fail="1" skip="0">Smoke</stat>
+</tag>
+<suite>
+<stat pass="0" fail="2" skip="0" id="s1" name="Suites">Suites</stat>
+<stat pass="0" fail="2" skip="0" id="s1-s1" name="Omni">Suites.Omni</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s1" name="Login">Suites.Omni.Login</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s1-s1" name="Login">Suites.Omni.Login.Login</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s2" name="PesaLink">Suites.Omni.PesaLink</stat>
+<stat pass="0" fail="1" skip="0" id="s1-s1-s2-s1" name="PesalinkToMobile">Suites.Omni.PesaLink.PesalinkToMobile</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
