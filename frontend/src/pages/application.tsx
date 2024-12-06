@@ -189,7 +189,7 @@ const ApplicationsDashboard = () => {
   if (error) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <CustomAlert type="error" message={error} />
+        <CustomAlert type="error" message={error} isVisible={false} />
       </div>
     );
   }

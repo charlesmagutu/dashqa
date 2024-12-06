@@ -56,7 +56,7 @@ const TestRunDashboard = () => {
   const fetchTestRuns = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8081/api/v1/test/run');
+      const response = await fetch(`http://localhost:8081/api/v1/test/run/app/${selectedItem.id}`);
       const data = await response.json();
       setTestRuns(data);
     } catch (error) {

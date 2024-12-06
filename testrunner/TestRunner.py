@@ -30,18 +30,33 @@ class ReportListener:
             "machine": platform.machine()
         }
 
-    def start_suite(self, name, attributes):
-        print(f"obonjusto {attributes}")
-        # print(f"Suite name: {name}")
-        # print(f"Documentation: {attributes['doc']}")
-        # print(f"Metadata: {attributes['metadata']}")
-        # print(f"Source: {attributes['source']}")
-        # print(f"Parent: {attributes.get('parent', 'None')}")
-        # print(f"Child suites: {attributes['suites']}")
-        # print(f"Tests: {attributes['tests']}")
-        # print(f"Total tests: {attributes['totaltests']}")
-        # print(f"ID: {attributes['id']}")
-        # print(f"Fully qualified name: {attributes['longname']}")
+    def start_suite(self, name, attrs):
+        suite_data = {
+            "runId" : self.runId,
+            "name":name,
+            "application":1,
+            "type": "SUITE_START",
+            "starttime" : attrs['starttime']
+        }
+
+        self._send_data(suite_data)
+
+    def end_suite(self, name, attrs):
+        suite_id = attrs['id']
+
+        if suite_id == 's1':
+            suite_data = {
+                "runId" : self.runId,
+                "name":name,
+                "type": "SUITE_END",
+                "starttime" : attrs['starttime'],
+                "duration" : attrs['elapsedtime'],
+                "endtime" : attrs['endtime'],
+                "status"   : attrs['status'],
+                "totaltests" : attrs['totaltests']
+            }
+
+            self._send_data(suite_data)
 
     def start_test(self, name, attrs):
         self.current_test = name
@@ -55,7 +70,7 @@ class ReportListener:
             "status": "RUNNING",
             "systemInfo": self.system_info,
         }
-        print(test_data)
+        print(f"data is {attrs}" )
         self._send_data(test_data)
 
     def end_test(self, name, attrs):

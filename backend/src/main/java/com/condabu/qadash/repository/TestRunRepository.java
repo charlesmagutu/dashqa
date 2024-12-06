@@ -9,4 +9,5 @@ import com.condabu.qadash.entity.TestRun;
 public interface TestRunRepository extends JpaRepository<TestRun, Long>{
 
     List<TestRun> findByRunId(String runId);
+    List<TestRun> findByApplication(Long appId);
 }

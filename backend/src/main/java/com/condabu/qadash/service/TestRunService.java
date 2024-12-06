@@ -25,15 +25,15 @@ public class TestRunService {
     private static final String REQUIREMENTS_FILE = "/home/condabu/development/dashqa/testrunner/requirements.txt";
 
     @Async
-    public CompletableFuture<String> startTestRun(TestRunConfig testRunConfig) {
+    public void startTestRun(TestRunConfig testRunConfig) {
         try {
             installMissingModules(); // Ensure all modules are installed before running
             List<String> command = buildTestCommand(testRunConfig);
             String result = executeCommand(command, false);
-            return CompletableFuture.completedFuture(result);
+            CompletableFuture.completedFuture(result);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error running test: ", e);
-            return CompletableFuture.failedFuture(e);
+            CompletableFuture.failedFuture(e);
         }
     }
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TestResultService {
@@ -25,10 +26,11 @@ public class TestResultService {
     @Autowired
     private TestRunStatusService testRunService;
 
-
+    @Autowired
+    private TestRunStatusService testRunStatusService;
     public void saveResponsesFromExecutor(JsonNode jsonData){
         if (jsonData == null) {
-            System.out.print("Received a null JSON from executor listerner");
+            System.out.print("Received a null JSON from executor listener");
         }
         try{
             @SuppressWarnings("null")
@@ -39,14 +41,23 @@ public class TestResultService {
                 testResultRepository.save(testResult);
                }else if (type.equalsIgnoreCase("TEST_START")){
                 System.out.println("Test has been Started");
-                TestRun testRun = testRunStartDetails(jsonData);
-                System.out.print("received data is"+testRun.getRunId());
+                TestRun testRun = testCaseStartDetails(jsonData);
+                System.out.print("received data is"+testRun.getRunId()+ testRun.toString());
                 testRunRepository.save(testRun);
                }else if (type.equalsIgnoreCase("RUN_END")){
                     TestRun testRunEnd = testRunEndDetails(jsonData);
                     testRunService.updateRunEndResults(testRunEnd);
 
                     System.out.println("Test testRunEnd"+testRunEnd.getRunId() + testRunEnd.getStatus());
+               }else if (type.equalsIgnoreCase("SUITE_START")){
+                   System.out.println("Test has been Started");
+                   TestRun testRun = testRunStartDetails(jsonData);
+                   System.out.print("received data is"+testRun.getRunId());
+                   testRunRepository.save(testRun);
+               }
+               else if (type.equalsIgnoreCase("SUITE_END")){
+                   TestRun testRunEnd = testRunEndDetails(jsonData);
+                   testRunService.updateRunEndResults(testRunEnd);
                }
                else{
                 System.out.println("To be implemented" + type);
@@ -66,7 +77,7 @@ public class TestResultService {
         testResult.setDuration(getDoubleNode(jsonData, "duration"));
         testResult.setStatus(getTextNode(jsonData, "status"));
         testResult.setMessage(getTextNode(jsonData, "message"));
-        testResult.setCritical(getBooleanNode(jsonData, "critical"));
+        testResult.setCritical(Boolean.TRUE.equals(getBooleanNode(jsonData, "critical")));
         testResult.setScreenshot(getTextNode(jsonData, "screenshot"));
         testResult.setRunId(getTextNode(jsonData, "runId"));
         List<String> tags = new ArrayList<>();
@@ -91,12 +102,30 @@ public class TestResultService {
 
 
     public TestRun testRunStartDetails(JsonNode jsonData){
-            TestRun testRun = new TestRun();
+        String runId = getTextNode(jsonData, "runId");
+
+        if(!testRunService.doesRunExists(runId)) {
+            TestRun testRun =  new TestRun();
+            testRun.setApplication(Long.valueOf(Objects.requireNonNull(getTextNode(jsonData, "application"))));
             testRun.setRunId(getTextNode(jsonData, "runId"));
+            testRun.setSuite(getTextNode(jsonData, "name"));
             testRun.setRunDate(LocalDate.now());
             testRun.setStatus(getTextNode(jsonData, "status"));
             testRun.setCreatedAt(LocalDateTime.now());
             return testRun;
+        }
+        return null;
+    }
+
+
+    public TestRun testCaseStartDetails(JsonNode jsonData){
+//            TestRun testRun =  new TestRun();
+//            testRun.setRunId(getTextNode(jsonData, "runId"));
+//            testRun.setSuite(getTextNode(jsonData, "name"));
+//            testRun.setRunDate(LocalDate.now());
+//            testRun.setStatus(getTextNode(jsonData, "status"));
+//            testRun.setCreatedAt(LocalDateTime.now());
+            return null;
     }
 
     public TestRun testRunEndDetails(JsonNode jsonData){

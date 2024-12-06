@@ -41,4 +41,9 @@ public class TestResultController {
     public List<TestRun> getAllRuns(){
         return testRunService.getAllTestRuns();
     }
+
+    @GetMapping("/run/app/{appId}")
+    public  List<TestRun> getAllApplicationRuns(@PathVariable Long appId){
+        return  testRunService.getAllTestRunsByAppId(appId);
+    }
 }

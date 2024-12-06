@@ -24,7 +24,6 @@ public class TestRunStatusService {
 
     public boolean doesRunExists(String runId){
         List<TestRun> existingRuns = testRunRepository.findByRunId(runId);
-
         return !existingRuns.isEmpty();
     }
 
@@ -36,5 +35,9 @@ public class TestRunStatusService {
             existingRun.setStatus(testRunEnd.getStatus());
             testRunRepository.save(existingRun);
         }
+    }
+
+    public List<TestRun> getAllTestRunsByAppId(Long appId) {
+        return testRunRepository.findByApplication(appId);
     }
 }
