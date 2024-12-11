@@ -42,6 +42,8 @@ class ReportListener:
         self._send_data(suite_data)
 
     def end_suite(self, name, attrs):
+
+        print(f"attributes here {attrs}")
         suite_id = attrs['id']
 
         if suite_id == 's1':
@@ -53,7 +55,9 @@ class ReportListener:
                 "duration" : attrs['elapsedtime'],
                 "endtime" : attrs['endtime'],
                 "status"   : attrs['status'],
-                "totaltests" : attrs['totaltests']
+                "totaltests" : attrs['totaltests'],
+                "statistics" : attrs['statistics'],
+                
             }
 
             self._send_data(suite_data)

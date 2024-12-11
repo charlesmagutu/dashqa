@@ -28,6 +28,9 @@ public class TestRun {
     private String suite;
     private String triggeredBy;
     private Long application;
+    private Integer total;
+    private Integer passed;
+    private Integer failed;
     private LocalDateTime createdAt;
     private LocalDateTime endedAt;
 }

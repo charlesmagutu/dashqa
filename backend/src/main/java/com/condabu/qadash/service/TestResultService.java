@@ -8,12 +8,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import lombok.extern.java.Log;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class TestResultService {
@@ -57,7 +60,12 @@ public class TestResultService {
                }
                else if (type.equalsIgnoreCase("SUITE_END")){
                    TestRun testRunEnd = testRunEndDetails(jsonData);
-                   testRunService.updateRunEndResults(testRunEnd);
+                   try{
+                       testRunService.updateRunEndResults(testRunEnd);
+                   }catch (Exception e){
+                       System.out.println("Error occurred"+e.getMessage());
+                   }
+
                }
                else{
                 System.out.println("To be implemented" + type);
@@ -105,18 +113,35 @@ public class TestResultService {
         String runId = getTextNode(jsonData, "runId");
 
         if(!testRunService.doesRunExists(runId)) {
+
             TestRun testRun =  new TestRun();
             testRun.setApplication(Long.valueOf(Objects.requireNonNull(getTextNode(jsonData, "application"))));
             testRun.setRunId(getTextNode(jsonData, "runId"));
             testRun.setSuite(getTextNode(jsonData, "name"));
             testRun.setRunDate(LocalDate.now());
             testRun.setStatus(getTextNode(jsonData, "status"));
+            testRun.setDuration(getTextNode(jsonData, "elapsedtime"));
             testRun.setCreatedAt(LocalDateTime.now());
             return testRun;
         }
         return null;
     }
 
+
+    public static Map<String, Integer> extractStatistics(String statistics){
+        Map<String, Integer> stats = new HashMap<>();
+        String regex = "(\\d+) test, (\\d+) passed, (\\d+) failed";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(statistics);
+
+        if (matcher.find()) {
+            // Extract values and store them in the map
+            stats.put("tests", Integer.parseInt(matcher.group(1)));
+            stats.put("passed", Integer.parseInt(matcher.group(2)));
+            stats.put("failed", Integer.parseInt(matcher.group(3)));
+        }
+        return  stats;
+    }
 
     public TestRun testCaseStartDetails(JsonNode jsonData){
 //            TestRun testRun =  new TestRun();
@@ -130,10 +155,14 @@ public class TestResultService {
 
     public TestRun testRunEndDetails(JsonNode jsonData){
             //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String statistics = getTextNode(jsonData,"statistics");
+            Map<String, Integer> result = extractStatistics(statistics);
             TestRun testRun = new TestRun();
             testRun.setRunId(getTextNode(jsonData, "runId"));
             testRun.setEndedAt(LocalDateTime.now());
             testRun.setStatus(getTextNode(jsonData, "status"));
+            testRun.setPassed(result.get("passed"));
+            testRun.setFailed(result.get("failed"));
             return testRun;
     }
     private String getTextNode(JsonNode node, String fieldName) {
@@ -151,7 +180,9 @@ public class TestResultService {
     private Boolean getBooleanNode(JsonNode node, String fieldName) {
         return node.has(fieldName) && !node.get(fieldName).isNull() ? node.get(fieldName).asBoolean() : null;
     }
-
+    private Integer getIntegerNode(JsonNode node, String fieldName) {
+        return node.has(fieldName) && !node.get(fieldName).isNull() ? node.get(fieldName).asInt() : null;
+    }
     public  List<TestResult> fetchAllTestResults() {
         return testResultRepository.findAll();
     }

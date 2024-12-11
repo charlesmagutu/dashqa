@@ -9,6 +9,7 @@ import {
   Database,
   ServerCog,
   Settings,
+  Smartphone,
 } from 'lucide-react';
 import logo from '@/assets/co-opbank-logo.png'; // Import the logo
 
@@ -26,6 +27,12 @@ const menuStructure: MenuItem[] = [
     title: 'Dashboard',
     icon: <LayoutDashboard size={20} />,
     path: '/dashboard',
+  },
+  {
+    id: 'devices',
+    title: 'Devices',
+    icon: <Smartphone size={20} />,
+    path: '/devices',
   },
   {
     id: 'automation',
