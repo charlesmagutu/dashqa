@@ -1,24 +1,24 @@
 package com.condabu.qadash.service;
+
 import com.condabu.qadash.entity.Keyword;
 import com.condabu.qadash.entity.TestResult;
 import com.condabu.qadash.entity.TestRun;
 import com.condabu.qadash.repository.TestResultRepository;
 import com.condabu.qadash.repository.TestRunRepository;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import lombok.extern.java.Log;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@Slf4j
 public class TestResultService {
 
     @Autowired
@@ -29,39 +29,40 @@ public class TestResultService {
     @Autowired
     private TestRunStatusService testRunService;
 
-    @Autowired
-    private TestRunStatusService testRunStatusService;
     public void saveResponsesFromExecutor(JsonNode jsonData){
         if (jsonData == null) {
             System.out.print("Received a null JSON from executor listener");
         }
         try{
+            assert jsonData != null;
             @SuppressWarnings("null")
             String type = jsonData.get("type") !=null ? jsonData.get("type").asText() : "";
             if (!type.isEmpty()) {
                if(type.equalsIgnoreCase("TEST_END")){
-                TestResult testResult = convertResponseToTestResultEntity(jsonData);
+                TestResult testResult = testCaseExecutionEndResults(jsonData);
+                log.info("Test case {} execution ended with status {} at {}", testResult.getName(), testResult.getStatus(), testResult.getEndTime());
                 testResultRepository.save(testResult);
                }else if (type.equalsIgnoreCase("TEST_START")){
-                System.out.println("Test has been Started");
-                TestRun testRun = testCaseStartDetails(jsonData);
-                System.out.print("received data is"+testRun.getRunId()+ testRun.toString());
-                testRunRepository.save(testRun);
+                log.info("Starting execution of test case"+jsonData.get("name"));
+//                TestRun testRun = testCaseStartDetails(jsonData);
+//                System.out.print("received data is"+testRun.getRunId()+ testRun.toString());
+//                testRunRepository.save(testRun);
                }else if (type.equalsIgnoreCase("RUN_END")){
                     TestRun testRunEnd = testRunEndDetails(jsonData);
-                    testRunService.updateRunEndResults(testRunEnd);
+                    testRunService.updateTestRunExecutionEndResults(testRunEnd);
+                    log.info("Test run with run id {} ending with status {} ", testRunEnd.getRunId(), testRunEnd.getStatus());
 
-                    System.out.println("Test testRunEnd"+testRunEnd.getRunId() + testRunEnd.getStatus());
                }else if (type.equalsIgnoreCase("SUITE_START")){
-                   System.out.println("Test has been Started");
+                   log.info("Suite execution started {}", jsonData.get("name"));
                    TestRun testRun = testRunStartDetails(jsonData);
                    System.out.print("received data is"+testRun.getRunId());
                    testRunRepository.save(testRun);
                }
                else if (type.equalsIgnoreCase("SUITE_END")){
+
                    TestRun testRunEnd = testRunEndDetails(jsonData);
                    try{
-                       testRunService.updateRunEndResults(testRunEnd);
+                       testRunService.updateTestRunExecutionEndResults(testRunEnd);
                    }catch (Exception e){
                        System.out.println("Error occurred"+e.getMessage());
                    }
@@ -76,7 +77,7 @@ public class TestResultService {
         }
     }
 
-    public TestResult convertResponseToTestResultEntity(JsonNode jsonData) {
+    public TestResult testCaseExecutionEndResults(JsonNode jsonData) {
         TestResult testResult = new TestResult();
         testResult.setSuite(getTextNode(jsonData, "suite"));
         testResult.setName(getTextNode(jsonData, "name"));
@@ -85,9 +86,10 @@ public class TestResultService {
         testResult.setDuration(getDoubleNode(jsonData, "duration"));
         testResult.setStatus(getTextNode(jsonData, "status"));
         testResult.setMessage(getTextNode(jsonData, "message"));
-        testResult.setCritical(Boolean.TRUE.equals(getBooleanNode(jsonData, "critical")));
+        testResult.setCritical(Boolean.TRUE.equals(getBooleanNode(jsonData)));
         testResult.setScreenshot(getTextNode(jsonData, "screenshot"));
         testResult.setRunId(getTextNode(jsonData, "runId"));
+        testResult.setType(getTextNode(jsonData, "type"));
         List<String> tags = new ArrayList<>();
         if (jsonData.has("tags")) {
             jsonData.get("tags").forEach(tag -> tags.add(tag.asText()));
@@ -130,7 +132,7 @@ public class TestResultService {
 
     public static Map<String, Integer> extractStatistics(String statistics){
         Map<String, Integer> stats = new HashMap<>();
-        String regex = "(\\d+) test, (\\d+) passed, (\\d+) failed";
+        String regex = "(\\d+)\\s+tests?,\\s+(\\d+)\\s+passed,\\s+(\\d+)\\s+failed";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(statistics);
 
@@ -143,26 +145,41 @@ public class TestResultService {
         return  stats;
     }
 
-    public TestRun testCaseStartDetails(JsonNode jsonData){
+//    public TestRun testCaseStartDetails(JsonNode jsonData){
 //            TestRun testRun =  new TestRun();
 //            testRun.setRunId(getTextNode(jsonData, "runId"));
 //            testRun.setSuite(getTextNode(jsonData, "name"));
 //            testRun.setRunDate(LocalDate.now());
 //            testRun.setStatus(getTextNode(jsonData, "status"));
 //            testRun.setCreatedAt(LocalDateTime.now());
-            return null;
-    }
+//            System.out.println(testRun);
+//            return testRun;
+//    }
+
 
     public TestRun testRunEndDetails(JsonNode jsonData){
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String statistics = getTextNode(jsonData,"statistics");
+
+
             Map<String, Integer> result = extractStatistics(statistics);
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String runID = getTextNode(jsonData, "runId");
+            String status = getTextNode(jsonData, "status");
+            Integer passed = result.get("passed");
+            Integer failed = result.get("failed");
+            Integer totalTests = result.get("tests");
+            String duration = String.valueOf(getDoubleNode(jsonData, "duration"));
+
             TestRun testRun = new TestRun();
-            testRun.setRunId(getTextNode(jsonData, "runId"));
+            testRun.setRunId(runID);
             testRun.setEndedAt(LocalDateTime.now());
-            testRun.setStatus(getTextNode(jsonData, "status"));
-            testRun.setPassed(result.get("passed"));
-            testRun.setFailed(result.get("failed"));
+            testRun.setStatus(status);
+            testRun.setDuration(duration);
+            testRun.setPassed(passed);
+            testRun.setFailed(failed);
+            testRun.setTotal(totalTests);
+            log.info("Statistics are {}", statistics);
+            log.info("Updating run end details with id {} status {} total {} passed {} failed {}", runID, status, totalTests, passed, failed);
             return testRun;
     }
     private String getTextNode(JsonNode node, String fieldName) {
@@ -177,8 +194,8 @@ public class TestResultService {
         return node.has(fieldName) && !node.get(fieldName).isNull() ? node.get(fieldName).asDouble() : null;
     }
 
-    private Boolean getBooleanNode(JsonNode node, String fieldName) {
-        return node.has(fieldName) && !node.get(fieldName).isNull() ? node.get(fieldName).asBoolean() : null;
+    private Boolean getBooleanNode(JsonNode node) {
+        return node.has("critical") && !node.get("critical").isNull() ? node.get("critical").asBoolean() : null;
     }
     private Integer getIntegerNode(JsonNode node, String fieldName) {
         return node.has(fieldName) && !node.get(fieldName).isNull() ? node.get(fieldName).asInt() : null;

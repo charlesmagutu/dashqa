@@ -20,7 +20,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { CheckCircle, Clock2Icon, PlayCircle } from 'lucide-react';
+import { CheckCircle, Clock2Icon, Cross, PlayCircle, X } from 'lucide-react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useGenericContext } from '@/GenericContex';
 
@@ -29,8 +29,11 @@ interface TestRun {
   id: number;
   runId: string;
   runDate: string;
+  suite: string;
+  total : number;
   createdAt: string;
   endedAt: string | null;
+  duration:number
   triggeredBy: string;
   status: string;
 }
@@ -82,8 +85,8 @@ const TestRunDashboard = () => {
   const prepareTrendData = () => {
     return testRuns.map((run) => ({
       date: formatDate(run.runDate),
-      Success: run.status === 'Passed' ? 1 : 0,
-      Failure: run.status === 'Failed' ? 1 : 0
+      Success: run.status === 'passed' ? 1 : 0,
+      Failure: run.status === 'failed' ? 1 : 0
     }));
   };
 
@@ -104,6 +107,8 @@ const TestRunDashboard = () => {
         return { icon: <CheckCircle color="green" />, color: 'text-green-500' };
       case 'RUNNING':
         return { icon: <Clock2Icon color="blue" />, color: 'text-blue-500' };
+        case 'FAIL':
+          return { icon: <X color="red" />, color: 'text-red-500' };
       case 'STARTED':
         return { icon: <PlayCircle color="orange" />, color: 'text-orange-500' };
       default:
@@ -179,8 +184,11 @@ const TestRunDashboard = () => {
                   <TableRow>
                     <TableHead>Run ID</TableHead>
                     <TableHead>Run Date</TableHead>
+                    <TableHead>Suite</TableHead>
+                    <TableHead>Total Cases</TableHead>
                     <TableHead>Start Time</TableHead>
                     <TableHead>Ended Time</TableHead>
+                    <TableHead>Duration</TableHead>
                     <TableHead>Triggered By</TableHead>
                     <TableHead>Status</TableHead>
                   </TableRow>
@@ -197,7 +205,10 @@ const TestRunDashboard = () => {
                       >
                         <TableCell>{run.runId}</TableCell>
                         <TableCell>{formatDate(run.runDate)}</TableCell>
+                        <TableCell>{run.suite}</TableCell>
+                        <TableCell>{run.total}</TableCell>
                         <TableCell>{formatDate(run.createdAt)}</TableCell>
+                        <TableCell>{run.duration}</TableCell>
                         <TableCell>{run.endedAt ? formatDate(run.endedAt) : 'N/A'}</TableCell>
                         <TableCell>{run.triggeredBy}</TableCell>
                         <TableCell>
