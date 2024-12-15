@@ -103,7 +103,7 @@ const TestRunDashboard = () => {
 
   const getStatusIcon = (run_status: string) => {
     switch (run_status) {
-      case 'ENDED':
+      case 'PASS':
         return { icon: <CheckCircle color="green" />, color: 'text-green-500' };
       case 'RUNNING':
         return { icon: <Clock2Icon color="blue" />, color: 'text-blue-500' };
@@ -208,8 +208,8 @@ const TestRunDashboard = () => {
                         <TableCell>{run.suite}</TableCell>
                         <TableCell>{run.total}</TableCell>
                         <TableCell>{formatDate(run.createdAt)}</TableCell>
-                        <TableCell>{run.duration}</TableCell>
                         <TableCell>{run.endedAt ? formatDate(run.endedAt) : 'N/A'}</TableCell>
+                        <TableCell>{run.duration}</TableCell>
                         <TableCell>{run.triggeredBy}</TableCell>
                         <TableCell>
                           <div className={`flex items-center gap-2 ${color}`}>
