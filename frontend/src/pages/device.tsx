@@ -1,277 +1,280 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { 
+  Smartphone, 
+  Tablet, 
+  Laptop, 
+  AlertCircle, 
+  CheckCircle2, 
   Clock, 
-  MapPin, 
-  User, 
-  ArrowRight, 
-  Filter, 
-  Calendar, 
-  ChevronDown, 
-  ChevronUp 
+  PieChart,
+  Edit2,
+  Trash2,
+  Plus,
+  CheckCircle,
+  XCircle,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
+import { 
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart as RPieChart,
+  Pie,
+  Cell
+} from 'recharts';
 
-// Sample comprehensive history data
-const initialHistoryData = [
-  {
-    id: 'HIS001',
-    deviceId: 'DEV001',
-    deviceName: 'Macbook Pro',
-    type: 'Checkout',
-    from: {
-      location: 'IT Department',
-      assignedTo: 'John Doe',
-      department: 'Engineering'
-    },
-    to: {
-      location: 'Client Site',
-      assignedTo: 'John Doe',
-      department: 'Engineering'
-    },
-    timestamp: '2024-02-15T10:30:00Z',
-    reason: 'Client Meeting',
-    status: 'Approved',
-    duration: '3 days'
-  },
-  {
-    id: 'HIS002',
-    deviceId: 'DEV002',
-    deviceName: 'iPhone 13',
-    type: 'Maintenance',
-    from: {
-      location: 'Sales Office',
-      assignedTo: 'Sarah Smith',
-      department: 'Sales'
-    },
-    to: {
-      location: 'IT Repair Center',
-      assignedTo: 'IT Support',
-      department: 'IT'
-    },
-    timestamp: '2024-02-10T14:45:00Z',
-    reason: 'Screen Repair',
-    status: 'In Progress',
-    duration: 'Ongoing'
-  },
-  // More history entries...
-];
+const DeviceDashboard = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
-const DeviceHistoryTracker = () => {
-  const [historyData, setHistoryData] = useState(initialHistoryData);
-  const [filters, setFilters] = useState({
-    type: '',
-    department: '',
-    status: '',
-    dateRange: {
-      start: '',
-      end: ''
+  // Sample data - would come from your backend
+  const deviceStats = {
+    total: 45,
+    available: 28,
+    inUse: 12,
+    maintenance: 5,
+    types: {
+      mobile: 20,
+      tablet: 15,
+      laptop: 10
     }
-  });
-  const [sortConfig, setSortConfig] = useState({
-    key: 'timestamp',
-    direction: 'desc'
-  });
-  const [expandedEntry, setExpandedEntry] = useState(null);
-
-  // Advanced filtering and sorting
-  const filteredAndSortedHistory = useMemo(() => {
-    return historyData
-      .filter(entry => {
-        const matchesType = !filters.type || entry.type === filters.type;
-        const matchesDepartment = 
-          !filters.department || 
-          entry.from.department === filters.department || 
-          entry.to.department === filters.department;
-        const matchesStatus = !filters.status || entry.status === filters.status;
-        
-        const entryDate = new Date(entry.timestamp);
-        const matchesDateRange = 
-          (!filters.dateRange.start || entryDate >= new Date(filters.dateRange.start)) &&
-          (!filters.dateRange.end || entryDate <= new Date(filters.dateRange.end));
-
-        return matchesType && matchesDepartment && matchesStatus && matchesDateRange;
-      })
-      .sort((a, b) => {
-        const modifier = sortConfig.direction === 'asc' ? 1 : -1;
-        if (a[sortConfig.key] < b[sortConfig.key]) return -1 * modifier;
-        if (a[sortConfig.key] > b[sortConfig.key]) return 1 * modifier;
-        return 0;
-      });
-  }, [historyData, filters, sortConfig]);
-
-  const toggleSort = (key) => {
-    setSortConfig(prev => ({
-      key,
-      direction: prev.key === key && prev.direction === 'desc' ? 'asc' : 'desc'
-    }));
   };
 
-  const toggleEntryExpand = (entryId) => {
-    setExpandedEntry(prev => prev === entryId ? null : entryId);
+  const [devices] = useState([
+    { id: 1, name: 'iPhone 13', type: 'Mobile', os: 'iOS 15', status: 'Available', lastCheckedOut: null, assignedTo: null },
+    { id: 2, name: 'Samsung Galaxy S21', type: 'Mobile', os: 'Android 12', status: 'In Use', lastCheckedOut: '2024-12-14', assignedTo: 'John Doe' },
+    { id: 3, name: 'iPad Pro', type: 'Tablet', os: 'iOS 15', status: 'Maintenance', lastCheckedOut: '2024-12-10', assignedTo: null },
+    { id: 4, name: 'Macbook Pro', type: 'Laptop', os: 'macOS Monterey', status: 'Available', lastCheckedOut: '2024-12-01', assignedTo: null },
+    { id: 5, name: 'Google Pixel 6', type: 'Mobile', os: 'Android 12', status: 'In Use', lastCheckedOut: '2024-12-13', assignedTo: 'Jane Smith' },
+    { id: 6, name: 'Surface Pro', type: 'Tablet', os: 'Windows 11', status: 'Available', lastCheckedOut: '2024-12-05', assignedTo: null },
+    { id: 7, name: 'iPhone 12', type: 'Mobile', os: 'iOS 15', status: 'Maintenance', lastCheckedOut: '2024-12-08', assignedTo: null },
+  ]);
+
+  const statusData = [
+    { name: 'Available', value: deviceStats.available, color: '#22c55e' },
+    { name: 'In Use', value: deviceStats.inUse, color: '#3b82f6' },
+    { name: 'Maintenance', value: deviceStats.maintenance, color: '#eab308' }
+  ];
+
+  const utilizationData = [
+    { month: 'Jan', devices: 35 },
+    { month: 'Feb', devices: 42 },
+    { month: 'Mar', devices: 38 },
+    { month: 'Apr', devices: 45 },
+    { month: 'May', devices: 40 },
+  ];
+
+  const getStatusColor = (status) => {
+    switch (status.toLowerCase()) {
+      case 'available': return 'bg-green-500';
+      case 'in use': return 'bg-blue-500';
+      case 'maintenance': return 'bg-yellow-500';
+      default: return 'bg-gray-500';
+    }
   };
 
-  const renderStatusBadge = (status) => {
-    const statusColors = {
-      'Approved': 'bg-green-100 text-green-800',
-      'In Progress': 'bg-yellow-100 text-yellow-800',
-      'Pending': 'bg-blue-100 text-blue-800',
-      'Rejected': 'bg-red-100 text-red-800'
-    };
-
-    return (
-      <span className={`px-2 py-1 rounded-full text-xs ${statusColors[status] || 'bg-gray-100'}`}>
-        {status}
-      </span>
-    );
-  };
+  // Pagination calculations
+  const totalPages = Math.ceil(devices.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentDevices = devices.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold flex items-center">
-          <Clock className="mr-2" /> Device History Tracker
-        </h1>
-        
-        {/* Filter Controls */}
-        <div className="flex space-x-2">
-          <select 
-            value={filters.type}
-            onChange={(e) => setFilters(prev => ({...prev, type: e.target.value}))}
-            className="border rounded px-2 py-1"
-          >
-            <option value="">All Types</option>
-            <option value="Checkout">Checkout</option>
-            <option value="Maintenance">Maintenance</option>
-          </select>
-          
-          <select 
-            value={filters.status}
-            onChange={(e) => setFilters(prev => ({...prev, status: e.target.value}))}
-            className="border rounded px-2 py-1"
-          >
-            <option value="">All Statuses</option>
-            <option value="Approved">Approved</option>
-            <option value="In Progress">In Progress</option>
-          </select>
-          
-          <div className="relative">
-            <input 
-              type="date"
-              value={filters.dateRange.start}
-              onChange={(e) => setFilters(prev => ({
-                ...prev, 
-                dateRange: {...prev.dateRange, start: e.target.value}
-              }))}
-              className="border rounded px-2 py-1"
-            />
-            <input 
-              type="date"
-              value={filters.dateRange.end}
-              onChange={(e) => setFilters(prev => ({
-                ...prev, 
-                dateRange: {...prev.dateRange, end: e.target.value}
-              }))}
-              className="border rounded px-2 py-1 ml-2"
-            />
-          </div>
-        </div>
+    <div className="p-4 space-y-4">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Device Testing Dashboard</h1>
+        <Button className="flex items-center gap-2">
+          <Plus className="w-4 h-4" />
+          Add New Device
+        </Button>
+      </div>
+      
+      {/* Quick Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <Card className="bg-white">
+          <CardHeader className="flex flex-row items-center justify-between py-2">
+            <CardTitle className="text-sm font-medium">Total Devices</CardTitle>
+            <PieChart className="h-4 w-4 text-gray-500" />
+          </CardHeader>
+          <CardContent className="py-2">
+            <div className="text-2xl font-bold">{deviceStats.total}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between py-2">
+            <CardTitle className="text-sm font-medium">Available</CardTitle>
+            <CheckCircle2 className="h-4 w-4 text-green-500" />
+          </CardHeader>
+          <CardContent className="py-2">
+            <div className="text-2xl font-bold">{deviceStats.available}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between py-2">
+            <CardTitle className="text-sm font-medium">In Use</CardTitle>
+            <Clock className="h-4 w-4 text-blue-500" />
+          </CardHeader>
+          <CardContent className="py-2">
+            <div className="text-2xl font-bold">{deviceStats.inUse}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between py-2">
+            <CardTitle className="text-sm font-medium">In Maintenance</CardTitle>
+            <AlertCircle className="h-4 w-4 text-yellow-500" />
+          </CardHeader>
+          <CardContent className="py-2">
+            <div className="text-2xl font-bold">{deviceStats.maintenance}</div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* History Table */}
-      <div className="bg-white shadow-md rounded overflow-hidden">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-100 border-b">
-              <th 
-                className="p-3 text-left cursor-pointer flex items-center"
-                onClick={() => toggleSort('timestamp')}
-              >
-                Timestamp 
-                {sortConfig.key === 'timestamp' && (
-                  sortConfig.direction === 'asc' ? <ChevronUp size={16} /> : <ChevronDown size={16} />
-                )}
-              </th>
-              <th className="p-3 text-left">Device</th>
-              <th className="p-3 text-left">Type</th>
-              <th className="p-3 text-left">From</th>
-              <th className="p-3 text-left">To</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredAndSortedHistory.map((entry) => (
-              <React.Fragment key={entry.id}>
-                <tr className="border-b hover:bg-gray-50">
-                  <td className="p-3">
-                    <div className="flex items-center">
-                      <Calendar className="mr-2 text-gray-500" size={16} />
-                      {new Date(entry.timestamp).toLocaleString()}
-                    </div>
-                  </td>
-                  <td className="p-3">{entry.deviceName}</td>
-                  <td className="p-3">{entry.type}</td>
-                  <td className="p-3">
-                    <div className="flex items-center">
-                      <MapPin className="mr-2 text-blue-500" size={16} />
-                      {entry.from.location}
-                    </div>
-                  </td>
-                  <td className="p-3">
-                    <div className="flex items-center">
-                      <ArrowRight className="mr-2 text-green-500" size={16} />
-                      {entry.to.location}
-                    </div>
-                  </td>
-                  <td className="p-3">
-                    {renderStatusBadge(entry.status)}
-                  </td>
-                  <td className="p-3">
-                    <button 
-                      onClick={() => toggleEntryExpand(entry.id)}
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      {expandedEntry === entry.id ? 'Collapse' : 'Details'}
-                    </button>
-                  </td>
-                </tr>
-                {expandedEntry === entry.id && (
-                  <tr className="bg-gray-50">
-                    <td colSpan="7" className="p-4">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <h3 className="font-semibold mb-2">From Details</h3>
-                          <p>Location: {entry.from.location}</p>
-                          <p>Assigned To: {entry.from.assignedTo}</p>
-                          <p>Department: {entry.from.department}</p>
-                        </div>
-                        <div>
-                          <h3 className="font-semibold mb-2">To Details</h3>
-                          <p>Location: {entry.to.location}</p>
-                          <p>Assigned To: {entry.to.assignedTo}</p>
-                          <p>Department: {entry.to.department}</p>
-                        </div>
-                        <div>
-                          <h3 className="font-semibold mb-2">Additional Information</h3>
-                          <p>Reason: {entry.reason}</p>
-                          <p>Duration: {entry.duration}</p>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
-        
-        {filteredAndSortedHistory.length === 0 && (
-          <div className="text-center py-4 text-gray-500">
-            No history entries found
-          </div>
-        )}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        {/* Charts */}
+        <Card>
+          <CardHeader className="py-2">
+            <CardTitle className="text-sm">Device Status Distribution</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[200px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <RPieChart>
+                  <Pie
+                    data={statusData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={60}
+                    label={({name, value}) => `${name}: ${value}`}
+                  >
+                    {statusData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </RPieChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="py-2">
+            <CardTitle className="text-sm">Device Utilization Trend</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[200px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={utilizationData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="devices" fill="#3b82f6" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
       </div>
+
+      {/* Device List Table */}
+      <Card>
+        <CardHeader className="py-2">
+          <CardTitle>Device List</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Device Name</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead>OS</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Last Checked Out</TableHead>
+                <TableHead>Assigned To</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {currentDevices.map((device) => (
+                <TableRow key={device.id}>
+                  <TableCell className="font-medium">{device.name}</TableCell>
+                  <TableCell>{device.type}</TableCell>
+                  <TableCell>{device.os}</TableCell>
+                  <TableCell>
+                    <Badge className={`${getStatusColor(device.status)}`}>
+                      {device.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>{device.lastCheckedOut || 'Never'}</TableCell>
+                  <TableCell>{device.assignedTo || 'None'}</TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex justify-end gap-2">
+                      {device.status === 'Available' && (
+                        <Button variant="ghost" size="sm" className="text-green-600">
+                          <CheckCircle className="w-4 h-4" />
+                        </Button>
+                      )}
+                      {device.status === 'In Use' && (
+                        <Button variant="ghost" size="sm" className="text-red-600">
+                          <XCircle className="w-4 h-4" />
+                        </Button>
+                      )}
+                      <Button variant="ghost" size="sm">
+                        <Edit2 className="w-4 h-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm">
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          
+          {/* Pagination Controls */}
+          <div className="flex items-center justify-between px-2 py-4">
+            <div className="text-sm text-gray-500">
+              Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, devices.length)} of {devices.length} devices
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
 
-export default DeviceHistoryTracker;
+export default DeviceDashboard;
