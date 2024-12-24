@@ -10,8 +10,13 @@ import {
   ServerCog,
   Settings,
   Smartphone,
+  icons,
+  Phone,
+  CalendarDays,
+  PocketKnife,
 } from 'lucide-react';
 import logo from '@/assets/co-opbank-logo.png'; // Import the logo
+import { title } from 'process';
 
 interface MenuItem {
   id: string;
@@ -30,10 +35,23 @@ const menuStructure: MenuItem[] = [
   },
   {
     id: 'devices',
-    title: 'Devices',
+    title: 'Test Gadgets',
     icon: <Smartphone size={20} />,
     path: '/devices',
   },
+      // {
+      //   id: 'manage-devices',
+      //   title: 'Manage',
+      //   icon: <Settings size={18} />,
+      //   path: '/devices/manage'
+      // },
+      // {
+      //   id: 'history-devices',
+      //   title: 'History',
+      //   icon: <CalendarDays size={18} />,
+      //   path: '/devices/'
+      // },
+    
   {
     id: 'automation',
     title: 'Automation',

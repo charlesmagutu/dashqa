@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Smartphone, 
-  Tablet, 
-  Laptop, 
   AlertCircle, 
   CheckCircle2, 
   Clock, 
   PieChart,
-  Edit2,
-  Trash2,
   Plus,
   CheckCircle,
   XCircle,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Eye
 } from 'lucide-react';
 import { 
   BarChart,
@@ -31,11 +27,23 @@ import {
   Pie,
   Cell
 } from 'recharts';
+import { useNavigate } from 'react-router-dom';
 
 const DeviceDashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+  interface Device {
+    name: string,
+    type: string,
+    os: string,
+    status: string,
+    lastChekedOut: string | null,
+    assignedTo: string,
+  }
+ //const [selectedItem, setSelectedItem] = useGenericContext<Device>();
+
+ const navigate = useNavigate();
   // Sample data - would come from your backend
   const deviceStats = {
     total: 45,
@@ -73,7 +81,7 @@ const DeviceDashboard = () => {
     { month: 'May', devices: 40 },
   ];
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'available': return 'bg-green-500';
       case 'in use': return 'bg-blue-500';
@@ -88,10 +96,15 @@ const DeviceDashboard = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentDevices = devices.slice(indexOfFirstItem, indexOfLastItem);
 
+const manageDevice = (device: Device) =>{
+  //selectedItem(device)
+  navigate("/devices/manage")
+}
+
   return (
     <div className="p-4 space-y-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Device Testing Dashboard</h1>
+        <h1 className="text-2xl font-bold">Test Gadgets</h1>
         <Button className="flex items-center gap-2">
           <Plus className="w-4 h-4" />
           Add New Device
@@ -234,12 +247,12 @@ const DeviceDashboard = () => {
                           <XCircle className="w-4 h-4" />
                         </Button>
                       )}
-                      <Button variant="ghost" size="sm">
-                        <Edit2 className="w-4 h-4" />
+                      <Button variant="ghost" size="sm" onClick={()=> manageDevice(device)}>
+                        <Eye className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="sm">
+                      {/* <Button variant="ghost" size="sm">
                         <Trash2 className="w-4 h-4" />
-                      </Button>
+                      </Button> */}
                     </div>
                   </TableCell>
                 </TableRow>

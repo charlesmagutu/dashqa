@@ -10,7 +10,8 @@ const ApplicationList = lazy(() => import('./pages/application'));
 const APIList = lazy(() => import('./pages/api'));
 const TestRun = lazy(()=> import('./pages/testrun'));
 const APIMonitoringDashboard = lazy(() => import('./pages/monitoring'));
-const DeviceManager  = lazy(() => import('./pages/device'))
+const DeviceManager  = lazy(() => import('./pages/devicemanagement'))
+const DeviceList = lazy(()=> import('./pages/device'))
 const PerformanceMetrics = lazy(() => import('./pages/performance'));
 const QASettings = lazy(() => import('./components/ui/settings'));
 import { ThemeProvider } from "@/components/theme-provider";
@@ -32,7 +33,11 @@ const App: React.FC = () => {
             <Route path="/" element={<AppLayout />}>
               <Route index element={<Navigate to="/dashboard" replace />} />
               <Route path="dashboard" element={<DashboardOverview />} />
-              <Route path='devices' element={<DeviceManager/>}/>
+              <Route path='devices'>
+                <Route index element={<DeviceList/>}/>
+                <Route path='/devices/manage' element={<DeviceManager/>}/>
+              </Route>
+              <Route path='devices' element={<DeviceList/>}/>
               <Route path="automation">
                 <Route index element={<ApplicationList />} />
                 <Route path="systems" element={<ApplicationList />} />
