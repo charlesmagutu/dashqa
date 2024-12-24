@@ -13,7 +13,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/app")
-@CrossOrigin(origins = "http://localhost:5173") 
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000", "http://localhost:8081"})
 public class ApplicationController {
     private final ApplicationService applicationService;
     private final DependencyAnalysisService dependencyService;

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TestDeviceRepository extends JpaRepository<Device, Long> {
-    List<Device> findByAssignedTo(Long assignedTo);
+public interface DeviceRepository extends JpaRepository<Device, Long> {
+//    List<Device> findByAssignedTo(Long assignedTo);
 }

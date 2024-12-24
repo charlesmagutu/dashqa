@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class FetchTestResultsResponse {
     private Long id;
-
     private String critical;
     private Double duration;
     private LocalDateTime endTime;

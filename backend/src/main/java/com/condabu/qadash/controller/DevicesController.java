@@ -1,28 +1,42 @@
 package com.condabu.qadash.controller;
 
+import com.condabu.qadash.entity.Device;
+import com.condabu.qadash.entity.DeviceHistory;
 import com.condabu.qadash.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("api/v1/device")
-public class TestGadgetsController {
+public class DevicesController {
+
     @Autowired
     DeviceService testDeviceService;
+    @CrossOrigin(origins = "http://localhost:3000")
 
     @PostMapping("/add")
-    public String addGadget(){
-        testDeviceService.createDevice();
-        return ("ok");
+    public Device addGadget(@RequestBody Device device){
+        return testDeviceService.createNewDevice(device);
     }
 
     @GetMapping
-    public  void listDevices(){
-
+    public List<Device> listDevices(){
+        return testDeviceService.getAllDevices();
     }
 
     @GetMapping("/{Id}")
-    public  void listDeviceById(@PathVariable String Id){
+    public Optional<Device> listDeviceById(@PathVariable Long Id){
 
+        return testDeviceService.getDeviceById(Id);
     }
+
+
+    @PostMapping("/{deviceId}/history")
+    public void createDeviceHistory(@PathVariable Long deviceId, @RequestBody DeviceHistory history){
+         testDeviceService.addDeviceHistory(deviceId, history);
+    }
+
 }

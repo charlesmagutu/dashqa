@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class TestDevices {
+public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,9 +26,24 @@ public class TestDevices {
     private String os;
     private String status;
     @Embedded
-    private Specifications specifications;
+    private Specifications  specifications;
     @ManyToOne
     private User assignedTo;
+
+    @OneToMany
+    private List<User> availableUsers;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<DeviceHistory> deviceHistory;
     private LocalDateTime last_checkout;
 
+
+}
+
+@Setter
+@Getter
+@Embeddable
+class Specifications {
+    private String processor;
+    private String ram;
+    private String storage;
 }
