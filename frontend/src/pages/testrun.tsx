@@ -18,7 +18,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  AreaChart,
+  Area
 } from 'recharts';
 import { CheckCircle, Clock2Icon, Cross, PlayCircle, X } from 'lucide-react';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -84,9 +86,10 @@ const TestRunDashboard = () => {
 
   const prepareTrendData = () => {
     return testRuns.map((run) => ({
+      runId: run.runId,
       date: formatDate(run.runDate),
-      Success: run.status === 'passed' ? 1 : 0,
-      Failure: run.status === 'failed' ? 1 : 0
+      Success: run.passed,
+      Failure: run.failed
     }));
   };
 
@@ -161,15 +164,24 @@ const TestRunDashboard = () => {
             </CardHeader>
             <CardContent className="h-64">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={prepareTrendData()}>
+                <AreaChart
+                width={500}
+                height={400}
+                data={prepareTrendData()}
+                margin={{
+                  top:10,
+                  right:30,
+                  left:0,
+                  bottom:0,
+                }}
+                >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
+                  <XAxis dataKey="runId" />
                   <YAxis />
                   <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="Success" stroke="#10b981" strokeWidth={2} />
-                  <Line type="monotone" dataKey="Failure" stroke="#ef4444" strokeWidth={2} />
-                </LineChart>
+                  <Area type="monotone" dataKey="Success" stroke="#82ca9d" fill="#82ca9d" />
+                  <Area type="monotone" dataKey="Failure" stroke="#ff4040" fill="#ff4040" />
+                </AreaChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
